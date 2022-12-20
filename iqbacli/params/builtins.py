@@ -14,6 +14,3 @@ ONLY_DIRNAME = ".*"
 IGNORE_EXT = ""
 IGNORE_FILENAME = ""
 IGNORE_DIRNAME = ""
-
-# Interface defaults.
-QUERY_DELETE_CACHE_ONLY = False

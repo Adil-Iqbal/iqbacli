@@ -63,17 +63,17 @@ def search(
         help="Ignore sub-directories containing these words. (comma-seperated)",
     ),
     only_ext: str = typer.Option(
-        default=builtins.IGNORE_EXT,
+        default=builtins.ONLY_EXT,
         show_default=False,
         help="Search only files with these extensions. (comma-seperated)",
     ),
     only_filename: str = typer.Option(
-        default=builtins.IGNORE_FILENAME,
+        default=builtins.ONLY_FILENAME,
         show_default=False,
         help="Search only filenames containing these words. (comma-seperated)",
     ),
     only_dirname: str = typer.Option(
-        default=builtins.IGNORE_DIRNAME,
+        default=builtins.ONLY_DIRNAME,
         show_default=False,
         help="Search only sub-directories containing these words. (comma-seperated)",
     ),
