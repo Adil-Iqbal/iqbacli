@@ -1,6 +1,6 @@
 import typer
 
-app = typer.Typer(short_help="Review size of back-up files and clear if desired.")
+app = typer.Typer(short_help="Review and manage file cache.")
 
 
 @app.command()
