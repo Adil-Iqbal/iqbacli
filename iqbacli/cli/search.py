@@ -10,8 +10,8 @@ app = typer.Typer(
 
 @app.callback(invoke_without_command=True)
 def search(
-    keywords: str,
     directory: Path,
+    keywords: str,
     output_dir: Optional[Path] = typer.Option(
         default=builtins.OUTPUT_DIR,
         show_default=False,
@@ -80,7 +80,6 @@ def search(
 ):
     """
     Search all files in `directory` for the keywords `keywords`.\n
-    The `keywords` argument should be a comma-seperated string.\n
-    Example: iqba search "foo,bar,baz" "C:\\path\\to\\directory"
+    (Example) iqba search "C:\\\\path\\\\to\\\\directory" "foo,bar,baz"
     """
     print("search")
