@@ -2,7 +2,6 @@ from . import util
 
 
 class Query:
+    @staticmethod
     def initialize_table() -> None:
-        with util.open_db() as cursor:
-            query = util.SQL_DIR / "init_query_table.sql"
-            cursor.executescript()
+        util.execute_sql_file("init_query_table")
