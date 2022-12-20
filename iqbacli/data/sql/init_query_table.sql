@@ -1,0 +1,6 @@
+DROP TABLE query IF EXISTS;
+
+CREATE TABLE query {
+    id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id)
+}
