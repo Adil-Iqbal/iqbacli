@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS query (
-    id INT PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     keywords_raw VARCHAR(500) NOT NULL,
     keywords_pattern VARCHAR(1500) NOT NULL,
     directory VARCHAR(500) NOT NULL,
@@ -18,16 +18,16 @@ CREATE TABLE IF NOT EXISTS query (
 );
 
 CREATE TABLE IF NOT EXISTS result (
-    id INT PRIMARY KEY,
-    query_id INT NOT NULL,
-    search_count INT NOT NULL,
-    match_count INT NOT NULL,
-    unsupported_count INT NOT NULL,
-    fail_to_parse_count INT NOT NULL,
-    fail_to_copy_count INT NOT NULL,
-    cache_dir_size INT,
+    id INTEGER PRIMARY KEY,
+    query_id INTEGER NOT NULL,
+    search_count INTEGER NOT NULL,
+    match_count INTEGER NOT NULL,
+    unsupported_count INTEGER NOT NULL,
+    fail_to_parse_count INTEGER NOT NULL,
+    fail_to_copy_count INTEGER NOT NULL,
+    cache_dir_size INTEGER,
     cache_dir VARCHAR(500),
-    FOREIGN KEY (query_id) REFERENCES query(id) ON DELETE CASCADE
+    FOREIGN KEY (query_id) REFERENCES query (id) ON DELETE CASCADE
 );
 
 COMMIT;
