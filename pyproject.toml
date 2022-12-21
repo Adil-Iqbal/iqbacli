@@ -1,12 +1,3 @@
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-
-[options]
-install_requires =
-    python-dotenv
-    typer
-
-[options.entry_points]
-console_scripts = 
-    iqba = iqbacli:app
