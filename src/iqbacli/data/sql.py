@@ -7,8 +7,8 @@ from contextlib import contextmanager
 
 
 BASE_DIR: Path = Path(__file__).parent.resolve()
-DB_PATH: Path = BASE_DIR / "db" / "database.sqlite3"
 SQL_DIR: Path = BASE_DIR / "sql"
+DB_PATH: Path = SQL_DIR / "database.sqlite3"
 
 
 @contextmanager
@@ -48,6 +48,7 @@ def file(filename: str, commit: bool = True) -> Any:
 
 
 def query(query_str: str) -> Any:
+    """Execute an SQL query."""
     with open_db() as cursor:
         cursor.execute(query_str)
         return cursor.fetchall()
