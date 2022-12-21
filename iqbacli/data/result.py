@@ -1,7 +1,5 @@
-from . import util
+from . import sql
 
 
 class Result:
-    @staticmethod
-    def initialize_table() -> None:
-        util.execute_sql_file("init_result_table")
+    pass

@@ -1,7 +1,5 @@
-from . import util
+from . import sql
 
 
 class Query:
-    @staticmethod
-    def initialize_table() -> None:
-        util.execute_sql_file("init_query_table")
+    pass

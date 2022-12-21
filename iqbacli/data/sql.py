@@ -2,22 +2,17 @@ import os
 from pathlib import Path
 import logging
 import sqlite3
-import dotenv
+from typing import Any
 from contextlib import contextmanager
 
-dotenv.load_dotenv()
 
 BASE_DIR: Path = Path(__file__).parent.resolve()
-DB_PATH: Path = BASE_DIR / "db" / "database.db"
+DB_PATH: Path = BASE_DIR / "db" / "database.sqlite3"
 SQL_DIR: Path = BASE_DIR / "sql"
 
 
-def check_env_var(varname: str, value: str) -> bool:
-    return varname in os.environ and os.getenv(varname) == value
-
-
 @contextmanager
-def open_db() -> sqlite3.Cursor:
+def open_db(commit: bool = True) -> sqlite3.Cursor:
     db_path = str(DB_PATH.absolute())
     connection = sqlite3.connect(db_path)
     try:
@@ -25,11 +20,12 @@ def open_db() -> sqlite3.Cursor:
     except sqlite3.DatabaseError as err:
         logging.error(err)
     finally:
-        connection.commit()
+        if commit:
+            connection.commit()
         connection.close()
 
 
-def execute_sql_file(filename: str):
+def file(filename: str, commit: bool = True) -> Any:
     """Execute an SQL file."""
 
     # Add file extension, if needed.
@@ -46,6 +42,16 @@ def execute_sql_file(filename: str):
         script = sql_file.read()
 
     # Execute file and return results.
-    with open_db() as cursor:
+    with open_db(commit=commit) as cursor:
         cursor.executescript(script)
         return cursor.fetchall()
+
+
+def query(query_str: str) -> Any:
+    with open_db() as cursor:
+        cursor.execute(query_str)
+        return cursor.fetchall()
+
+
+def initialize_database() -> None:
+    file("initialize_tables", commit=False)

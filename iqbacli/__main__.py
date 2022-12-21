@@ -1,11 +1,9 @@
 from iqbacli import cli
-from iqbacli.data.query import Query
-from iqbacli.data.result import Result
+from iqbacli.data import initialize_database
 
 
 def main():
-    Query.initialize_table()
-    Result.initialize_table()
+    initialize_database()
     cli.app()
 
 
