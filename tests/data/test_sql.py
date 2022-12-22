@@ -1,30 +1,58 @@
-import functools
 from iqbacli.data import sql
+from . import util
 
 
-def delete_db(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        if sql.DB_PATH.exists() and sql.DB_PATH.is_file():
-            sql.DB_PATH.unlink()
-        func(*args, **kwargs)
-
-    return wrapper
-
-
-def reset_db(func):
-    @functools.wraps(func)
-    @delete_db
-    def wrapper(*args, **kwargs):
-        sql.initialize_database()
-        func(*args, **kwargs)
-
-    return wrapper
-
-
-@delete_db
+@util.delete_db
 def test_open_db_creates_file_at_base_path():
     assert not sql.DB_PATH.exists()
     with sql.open_db() as _:
         ...
     assert sql.DB_PATH.exists()
+
+
+@util.delete_db
+def test_open_db_commit_on_close(monkeypatch):
+    db_conn = util.FakeSQLite3Connection("...")
+    util.monkeypatch_sqlite3(monkeypatch, db_conn)
+    with sql.open_db():
+        ...
+    assert db_conn.commit_called
+
+
+@util.delete_db
+def test_open_db_commit_override(monkeypatch):
+    db_conn = util.FakeSQLite3Connection("...")
+    util.monkeypatch_sqlite3(monkeypatch, db_conn)
+    with sql.open_db(commit=False):
+        ...
+    assert not db_conn.commit_called
+
+
+@util.delete_db
+def test_open_db_resource_closed(monkeypatch):
+    db_conn = util.FakeSQLite3Connection("...")
+    util.monkeypatch_sqlite3(monkeypatch, db_conn)
+    with sql.open_db():
+        ...
+    assert db_conn.close_called
+
+
+@util.delete_db
+def test_open_db_resource_closed_on_error(monkeypatch):
+    db_conn = util.FakeSQLite3Connection("...")
+    util.monkeypatch_sqlite3(monkeypatch, db_conn)
+    try:
+        with sql.open_db():
+            raise ValueError()
+    except ValueError:
+        assert db_conn.close_called
+
+
+@util.delete_db
+def test_open_db_uses_correct_path(monkeypatch):
+    expected_path = "C:\\path\\to\\db.sqlite3"
+    db_conn = util.FakeSQLite3Connection(expected_path)
+    util.monkeypatch_sqlite3(monkeypatch, db_conn)
+    with sql.open_db(commit=True):
+        ...
+    assert db_conn.db_path == expected_path
