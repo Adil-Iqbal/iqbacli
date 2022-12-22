@@ -1,8 +1,7 @@
-import os
 from pathlib import Path
 import logging
 import sqlite3
-from typing import Any
+from typing import Any, Generator
 from contextlib import contextmanager
 
 
@@ -12,12 +11,12 @@ DB_PATH: Path = SQL_DIR / "database.sqlite3"
 
 
 @contextmanager
-def open_db(commit: bool = True) -> sqlite3.Cursor:
+def open_db(commit: bool = True) -> Generator[sqlite3.Cursor, None, None]:
     db_path = str(DB_PATH.absolute())
     connection = sqlite3.connect(db_path)
     try:
         yield connection.cursor()
-    except sqlite3.DatabaseError as err:
+    except sqlite3.Error as err:
         logging.error(err)
     finally:
         if commit:
@@ -49,6 +48,7 @@ def file(filename: str, commit: bool = True) -> Any:
 
 def query(query_str: str, commit: bool = True) -> Any:
     """Execute an SQL query."""
+
     with open_db(commit=commit) as cursor:
         cursor.execute(query_str)
         return cursor.fetchall()

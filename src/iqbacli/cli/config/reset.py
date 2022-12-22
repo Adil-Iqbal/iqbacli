@@ -6,7 +6,7 @@ app = typer.Typer(short_help="Reset configuration or reset specific param.")
 @app.callback(invoke_without_command=True)
 def reset(
     param: str = typer.Option(
-        default=None, show_default=None, help="Reset a specific parameter to default."
+        default=None, show_default=False, help="Reset a specific parameter to default."
     )
 ):
     """

@@ -6,7 +6,7 @@ app = typer.Typer(short_help="Get configuration settings.")
 @app.callback(invoke_without_command=True)
 def get(
     param: str = typer.Option(
-        default=None, show_default=None, help="Get a specific parameter."
+        default=None, show_default=False, help="Get a specific parameter."
     )
 ):
     """

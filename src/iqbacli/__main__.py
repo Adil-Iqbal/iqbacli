@@ -1,5 +1,5 @@
 from iqbacli import cli
-from iqbacli.data import initialize_database
+from iqbacli.data.sql import initialize_database
 
 
 def main():
