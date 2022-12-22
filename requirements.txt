@@ -1,2 +1,2 @@
-typer
-python-dotenv
+typer==0.7.0
+python-dotenv==0.21.0
