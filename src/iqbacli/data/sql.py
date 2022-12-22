@@ -24,7 +24,7 @@ def open_db(commit: bool = True) -> Generator[sqlite3.Cursor, None, None]:
         connection.close()
 
 
-def file(filename: str, commit: bool = True) -> Any:
+def file(filename: str, commit: bool = True) -> list[tuple[Any, ...]]:
     """Execute an SQL file."""
 
     # Add file extension, if needed.
