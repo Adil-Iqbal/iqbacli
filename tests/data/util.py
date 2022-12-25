@@ -1,5 +1,6 @@
 import sqlite3
 import functools
+from typing import Any, Optional
 from iqbacli.data import sql
 
 
@@ -24,7 +25,8 @@ def reset_db(func):
 
 
 class FakeSQLite3Connection:
-    def __init__(self):
+    def __init__(self, return_data: Optional[list[tuple[Any, ...]]] = None):
+        self.return_data = return_data
         self.cursor_object = None
         self.db_path = None
         self.commit_called = False
@@ -37,7 +39,7 @@ class FakeSQLite3Connection:
 
     def cursor(self):
         self.cursor_called = True
-        self.cursor_object = FakeSQLite3Cursor()
+        self.cursor_object = FakeSQLite3Cursor(return_data=self.return_data)
         return self.cursor_object
 
     def commit(self):
@@ -48,7 +50,25 @@ class FakeSQLite3Connection:
 
 
 class FakeSQLite3Cursor:
-    ...
+    def __init__(self, return_data: Optional[list[tuple[Any, ...]]] = None):
+        self.return_data = return_data
+        self.execute_called = False
+        self.execute_query_str = None
+        self.execute_args = None
+        self.fetchall_called = False
+
+    def execute(self, query_str: str, *args):
+        self.execute_called = True
+        self.execute_query_str = query_str
+        self.execute_args = args
+        return None
+
+    def executescript(self, script: str):
+        ...
+
+    def fetchall(self):
+        self.fetchall_called = True
+        return self.return_data
 
 
 def monkeypatch_sqlite3(mp, fake_connection: FakeSQLite3Connection):

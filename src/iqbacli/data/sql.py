@@ -46,11 +46,11 @@ def file(filename: str, commit: bool = True) -> list[tuple[Any, ...]]:
         return cursor.fetchall()
 
 
-def query(query_str: str, commit: bool = True) -> Any:
+def query(query_str: str, *args, commit: bool = True) -> Any:
     """Execute an SQL query."""
-
+    print(args)
     with open_db(commit=commit) as cursor:
-        cursor.execute(query_str)
+        cursor.execute(query_str, args)
         return cursor.fetchall()
 
 
