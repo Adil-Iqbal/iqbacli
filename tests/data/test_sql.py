@@ -12,7 +12,7 @@ def test_open_db_creates_file_at_base_path():
 
 @util.delete_db
 def test_open_db_commit_on_close(monkeypatch):
-    db_conn = util.FakeSQLite3Connection("...")
+    db_conn = util.FakeSQLite3Connection()
     util.monkeypatch_sqlite3(monkeypatch, db_conn)
     with sql.open_db():
         ...
@@ -21,7 +21,7 @@ def test_open_db_commit_on_close(monkeypatch):
 
 @util.delete_db
 def test_open_db_commit_override(monkeypatch):
-    db_conn = util.FakeSQLite3Connection("...")
+    db_conn = util.FakeSQLite3Connection()
     util.monkeypatch_sqlite3(monkeypatch, db_conn)
     with sql.open_db(commit=False):
         ...
@@ -30,7 +30,7 @@ def test_open_db_commit_override(monkeypatch):
 
 @util.delete_db
 def test_open_db_resource_closed(monkeypatch):
-    db_conn = util.FakeSQLite3Connection("...")
+    db_conn = util.FakeSQLite3Connection()
     util.monkeypatch_sqlite3(monkeypatch, db_conn)
     with sql.open_db():
         ...
@@ -39,7 +39,7 @@ def test_open_db_resource_closed(monkeypatch):
 
 @util.delete_db
 def test_open_db_resource_closed_on_error(monkeypatch):
-    db_conn = util.FakeSQLite3Connection("...")
+    db_conn = util.FakeSQLite3Connection()
     util.monkeypatch_sqlite3(monkeypatch, db_conn)
     try:
         with sql.open_db():
@@ -50,9 +50,19 @@ def test_open_db_resource_closed_on_error(monkeypatch):
 
 @util.delete_db
 def test_open_db_uses_correct_path(monkeypatch):
-    expected_path = "C:\\path\\to\\db.sqlite3"
-    db_conn = util.FakeSQLite3Connection(expected_path)
+    expected_path = str(sql.DB_PATH.absolute())
+    db_conn = util.FakeSQLite3Connection()
     util.monkeypatch_sqlite3(monkeypatch, db_conn)
     with sql.open_db(commit=True):
         ...
     assert db_conn.db_path == expected_path
+
+
+@util.delete_db
+def test_open_db_cursor_called_and_returned(monkeypatch):
+
+    db_conn = util.FakeSQLite3Connection()
+    util.monkeypatch_sqlite3(monkeypatch, db_conn)
+    with sql.open_db(commit=True) as cursor:
+        assert db_conn.cursor_object == cursor
+    assert db_conn.cursor_called

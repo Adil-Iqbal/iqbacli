@@ -24,13 +24,21 @@ def reset_db(func):
 
 
 class FakeSQLite3Connection:
-    def __init__(self, db_path):
-        self.db_path = db_path
+    def __init__(self):
+        self.cursor_object = None
+        self.db_path = None
         self.commit_called = False
         self.close_called = False
+        self.cursor_called = False
+
+    def __call__(self, db_path: str):
+        self.db_path = db_path
+        return self
 
     def cursor(self):
-        ...
+        self.cursor_called = True
+        self.cursor_object = FakeSQLite3Cursor()
+        return self.cursor_object
 
     def commit(self):
         self.commit_called = True
@@ -39,5 +47,9 @@ class FakeSQLite3Connection:
         self.close_called = True
 
 
+class FakeSQLite3Cursor:
+    ...
+
+
 def monkeypatch_sqlite3(mp, fake_connection: FakeSQLite3Connection):
-    mp.setattr(sqlite3, "connect", lambda _: fake_connection)
+    mp.setattr(sqlite3, "connect", lambda db_path: fake_connection(db_path))
