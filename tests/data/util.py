@@ -4,7 +4,7 @@ from typing import Any, Optional
 from iqbacli.data import sql
 from pathlib import Path
 
-
+FakeReturnData = Optional[sql.SQLite3FetchAll]
 sql.DB_PATH = Path(__file__).parent.resolve() / "test.sqlite3"
 sql.SQL_DIR = Path(__file__).parent.resolve() / "sql"
 
@@ -30,16 +30,17 @@ def reset_db(func):
 
 
 class FakeSQLite3Connection:
-    def __init__(self, return_data: Optional[list[tuple[Any, ...]]] = None):
-        self.return_data = return_data
+    def __init__(self):
+        self.return_data = None
         self.cursor_object = None
         self.db_path = None
         self.commit_called = False
         self.close_called = False
         self.cursor_called = False
 
-    def __call__(self, db_path: str):
+    def __call__(self, db_path: str, return_data: FakeReturnData = None):
         self.db_path = db_path
+        self.return_data = return_data
         return self
 
     def cursor(self):
@@ -55,7 +56,7 @@ class FakeSQLite3Connection:
 
 
 class FakeSQLite3Cursor:
-    def __init__(self, return_data: Optional[list[tuple[Any, ...]]] = None):
+    def __init__(self, return_data: FakeReturnData = None):
         self.return_data = return_data
         self.executescript_called = False
         self.excutescript_script_arg = None
@@ -78,5 +79,13 @@ class FakeSQLite3Cursor:
         return self.return_data
 
 
-def monkeypatch_sqlite3(mp, fake_connection: FakeSQLite3Connection):
-    mp.setattr(sqlite3, "connect", lambda db_path: fake_connection(db_path))
+def monkeypatch_sqlite3(
+    monkeypatch,
+    fake_connection: FakeSQLite3Connection,
+    /,
+    return_data: FakeReturnData = None,
+):
+    def fake_connect_func(db_path):
+        return fake_connection(db_path=db_path, return_data=return_data)
+
+    monkeypatch.setattr(sqlite3, "connect", fake_connect_func)

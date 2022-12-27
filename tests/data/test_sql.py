@@ -13,7 +13,7 @@ def conn(monkeypatch):
 @delete_db
 def test_open_db_creates_file_at_base_path():
     assert not sql.DB_PATH.exists()
-    with sql.open_db() as _:
+    with sql.open_db():
         ...
     assert sql.DB_PATH.exists()
 

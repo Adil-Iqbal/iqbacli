@@ -1,14 +1,20 @@
+from __future__ import annotations
+
 from pathlib import Path
 import logging
 import sqlite3
-from typing import Any, Generator
+from typing import Any, Generator, Final, Union
 from contextlib import contextmanager
 
+# TODO: Change SQLValue to  SQLReprQuery and SQLReprResult.
+# TODO: Change SQLite3FetchAll to list[tuple[Union[SQLReprQuery, SQLReprResult]]]
+SQLValue = Union[int, str, bool]
+SQLite3FetchAll = list[tuple[SQLValue, ...]]
 
-sql_ext = ".sql"
-BASE_DIR: Path = Path(__file__).parent.resolve()
-SQL_DIR: Path = BASE_DIR / "sql"
-DB_PATH: Path = SQL_DIR / "database.sqlite3"
+sql_ext: Final[str] = ".sql"
+BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
+SQL_DIR: Final[Path] = BASE_DIR / "sql"
+DB_PATH: Final[Path] = SQL_DIR / "database.sqlite3"
 
 
 @contextmanager
@@ -25,7 +31,7 @@ def open_db(commit: bool = True) -> Generator[sqlite3.Cursor, None, None]:
         connection.close()
 
 
-def file(filename: str, commit: bool = True) -> list[tuple[Any, ...]]:
+def file(filename: str, commit: bool = True) -> SQLite3FetchAll:
     """Execute an SQL file."""
 
     # Add file extension, if needed.
@@ -46,7 +52,7 @@ def file(filename: str, commit: bool = True) -> list[tuple[Any, ...]]:
         return cursor.fetchall()
 
 
-def query(query_str: str, *args, commit: bool = True) -> Any:
+def query(query_str: str, *args, commit: bool = True) -> SQLite3FetchAll:
     """Execute an SQL query."""
     with open_db(commit=commit) as cursor:
         cursor.execute(query_str, args)
