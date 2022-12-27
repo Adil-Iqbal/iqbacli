@@ -101,3 +101,11 @@ def test_sql_file_with_commit_override(conn: FakeSQLite3Connection):
     filename = "test_script.sql"
     sql.file(filename, commit=False)
     assert not conn.commit_called
+
+
+def test_initialize_database_func(conn: FakeSQLite3Connection):
+    filename = "initialize_tables.sql"
+    filepath = sql.SQL_DIR / filename
+    sql.initialize_database()
+    with open(str(filepath), "r") as file:
+        assert file.read() == conn.cursor_object.excutescript_script_arg

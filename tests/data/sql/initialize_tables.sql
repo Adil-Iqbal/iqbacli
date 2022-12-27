@@ -1,0 +1,1 @@
+-- This is a fake initialize tables file.
