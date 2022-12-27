@@ -5,6 +5,7 @@ from typing import Any, Generator
 from contextlib import contextmanager
 
 
+sql_ext = ".sql"
 BASE_DIR: Path = Path(__file__).parent.resolve()
 SQL_DIR: Path = BASE_DIR / "sql"
 DB_PATH: Path = SQL_DIR / "database.sqlite3"
@@ -28,9 +29,8 @@ def file(filename: str, commit: bool = True) -> list[tuple[Any, ...]]:
     """Execute an SQL file."""
 
     # Add file extension, if needed.
-    ext = ".sql"
-    if not filename.endswith(ext):
-        filename += ext
+    if not filename.endswith(sql_ext):
+        filename += sql_ext
 
     # Determine absolute path to the file.
     filepath = SQL_DIR / filename
@@ -48,7 +48,6 @@ def file(filename: str, commit: bool = True) -> list[tuple[Any, ...]]:
 
 def query(query_str: str, *args, commit: bool = True) -> Any:
     """Execute an SQL query."""
-    print(args)
     with open_db(commit=commit) as cursor:
         cursor.execute(query_str, args)
         return cursor.fetchall()

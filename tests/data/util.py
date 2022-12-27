@@ -2,6 +2,11 @@ import sqlite3
 import functools
 from typing import Any, Optional
 from iqbacli.data import sql
+from pathlib import Path
+
+
+sql.DB_PATH = Path(__file__).parent.resolve() / "test.sqlite3"
+sql.SQL_DIR = Path(__file__).parent.resolve() / "sql"
 
 
 def delete_db(func):
@@ -52,6 +57,8 @@ class FakeSQLite3Connection:
 class FakeSQLite3Cursor:
     def __init__(self, return_data: Optional[list[tuple[Any, ...]]] = None):
         self.return_data = return_data
+        self.executescript_called = False
+        self.excutescript_script_arg = None
         self.execute_called = False
         self.execute_query_str = None
         self.execute_args = None
@@ -61,10 +68,10 @@ class FakeSQLite3Cursor:
         self.execute_called = True
         self.execute_query_str = query_str
         self.execute_args = args
-        return None
 
     def executescript(self, script: str):
-        ...
+        self.executescript_called = True
+        self.excutescript_script_arg = script
 
     def fetchall(self):
         self.fetchall_called = True
