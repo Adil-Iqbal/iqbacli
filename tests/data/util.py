@@ -4,7 +4,7 @@ from typing import Any, Optional
 from iqbacli.data import sql
 from pathlib import Path
 
-FakeReturnData = Optional[sql.SQLite3FetchAll]
+FakeReturnData = Optional[list[Any]]
 sql.DB_PATH = Path(__file__).parent.resolve() / "test.sqlite3"
 sql.SQL_DIR = Path(__file__).parent.resolve() / "sql"
 

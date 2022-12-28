@@ -5,15 +5,6 @@ import logging
 import sqlite3
 from typing import Any, Generator, Final
 from contextlib import contextmanager
-from .datatypes import SQLiteFetchAll
-
-# TODO: Change SQLValue to  SQLReprQuery and SQLReprResult.
-# TODO: Change SQLite3FetchAll to list[tuple[Union[SQLReprQuery, SQLReprResult]]]
-
-"""
-    See how you can make types returned from the SQLite3 Fetch All jive with
-    the dataclass models! Not sure how its possible.
-"""
 
 SQL_EXT: Final[str] = ".sql"
 BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
@@ -65,13 +56,3 @@ def query(query_str: str, *args, commit: bool = True) -> list[Any]:
 
 def initialize_database() -> None:
     file("initialize_tables", commit=False)
-
-
-def return_as():
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            ...
-
-        return wrapper
-
-    return decorator

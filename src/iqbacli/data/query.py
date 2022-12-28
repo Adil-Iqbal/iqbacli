@@ -1,15 +1,11 @@
 from __future__ import annotations
-import re
 
-from typing import Any, Optional, TypeVar
+from typing import Any, Optional
 from . import sql
 import dataclasses
 from pathlib import Path
 from .datatypes import SQLiteReprQuery
 from .result import Result
-
-
-TQuery = TypeVar("TQuery", bound="Query")
 
 
 @dataclasses.dataclass
