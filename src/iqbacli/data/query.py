@@ -1,15 +1,22 @@
-from typing import Optional
+from __future__ import annotations
+import re
+
+from typing import Any, Optional, TypeVar
 from . import sql
 import dataclasses
 from pathlib import Path
-from re import Pattern
+from .datatypes import SQLiteReprQuery
+from .result import Result
+
+
+TQuery = TypeVar("TQuery", bound="Query")
 
 
 @dataclasses.dataclass
 class Query:
-    id: int
+    qid: int
     keywords_raw: str
-    keywords_pattern: Pattern
+    keywords_pattern: str
     directory: Path
     output_dir: Path
     cache: bool
@@ -25,7 +32,7 @@ class Query:
     def save(self):
         sql.query(
             """
-            INSERT INTO query (
+            INSERT INTO queries (
                     keywords_raw,
                     keywords_pattern,
                     directory,
@@ -43,8 +50,8 @@ class Query:
         """,
             self.keywords_raw,
             self.keywords_pattern,
-            self.directory,
-            self.output_dir,
+            str(self.directory.absolute()),
+            str(self.output_dir.absolute()),
             self.cache,
             self.flat,
             self.regex,
@@ -56,13 +63,56 @@ class Query:
             self.ignore_dirname,
         )
 
+    def delete(self):
+        sql.query("DELETE FROM query WHERE qid = ?", self.qid)
 
-def delete_query(id: int) -> None:
-    sql.query("DELETE FROM query WHERE id = ?", id)
-
-
-def get_query(id: int) -> Optional[Query]:
-    ret = sql.query("SELECT * FROM query WHERE id = ?", id)
-    if len(ret) == 0:
+    def get_results(self) -> Optional[list[Result]]:
+        if result_reprs := sql.query(
+            "SELECT * FROM results WHERE qid = ? ORDER BY rid",
+            self.qid,
+        ):
+            return [Result._from_sqlite3(repr) for repr in result_reprs]
         return None
-    return Query(*ret[0])
+
+    @staticmethod
+    def _from_sqlite3(sql_repr: SQLiteReprQuery) -> Query:
+        return Query(
+            qid=sql_repr[0],
+            keywords_raw=sql_repr[1],
+            keywords_pattern=sql_repr[2],
+            directory=Path(sql_repr[3]),
+            output_dir=Path(sql_repr[4]),
+            cache=sql_repr[5],
+            flat=sql_repr[6],
+            regex=sql_repr[7],
+            only_ext=sql_repr[8],
+            only_filename=sql_repr[9],
+            only_dirname=sql_repr[10],
+            ignore_ext=sql_repr[11],
+            ignore_filename=sql_repr[12],
+            ignore_dirname=sql_repr[13],
+        )
+
+    @staticmethod
+    def get(qid: int) -> Optional[Query]:
+        if query_reprs := sql.query("SELECT * FROM queries WHERE qid = ?", qid):
+            return Query._from_sqlite3(query_reprs[0])
+        return None
+
+    @staticmethod
+    def get_max_qid() -> Any:
+        if qid_reprs := sql.query("SELECT MAX(qid) FROM queries"):
+            return qid_reprs[0][0]
+        return None
+
+    @staticmethod
+    def last() -> Optional[Query]:
+        if (max_qid := Query.get_max_qid()) is not None:
+            return Query.get(qid=max_qid)
+        return None
+
+    @staticmethod
+    def list() -> Optional[list[Query]]:
+        if query_reprs := sql.query("SELECT * FROM queries"):
+            return [Query._from_sqlite3(query_repr) for query_repr in query_reprs]
+        return None

@@ -1,5 +1,3 @@
-from abc import ABC
-
-
-class Model(ABC):
-    pass
+# from typing import Callable, TypeVar
+# from abc import ABC, abstractstaticmethod
+# from .datatypes import SQLiteRepr

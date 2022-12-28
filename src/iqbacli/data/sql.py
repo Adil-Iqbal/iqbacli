@@ -3,15 +3,19 @@ from __future__ import annotations
 from pathlib import Path
 import logging
 import sqlite3
-from typing import Any, Generator, Final, Union
+from typing import Any, Generator, Final
 from contextlib import contextmanager
+from .datatypes import SQLiteFetchAll
 
 # TODO: Change SQLValue to  SQLReprQuery and SQLReprResult.
 # TODO: Change SQLite3FetchAll to list[tuple[Union[SQLReprQuery, SQLReprResult]]]
-SQLValue = Union[int, str, bool]
-SQLite3FetchAll = list[tuple[SQLValue, ...]]
 
-sql_ext: Final[str] = ".sql"
+"""
+    See how you can make types returned from the SQLite3 Fetch All jive with
+    the dataclass models! Not sure how its possible.
+"""
+
+SQL_EXT: Final[str] = ".sql"
 BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
 SQL_DIR: Final[Path] = BASE_DIR / "sql"
 DB_PATH: Final[Path] = SQL_DIR / "database.sqlite3"
@@ -31,12 +35,12 @@ def open_db(commit: bool = True) -> Generator[sqlite3.Cursor, None, None]:
         connection.close()
 
 
-def file(filename: str, commit: bool = True) -> SQLite3FetchAll:
+def file(filename: str, commit: bool = True) -> list[Any]:
     """Execute an SQL file."""
 
     # Add file extension, if needed.
-    if not filename.endswith(sql_ext):
-        filename += sql_ext
+    if not filename.endswith(SQL_EXT):
+        filename += SQL_EXT
 
     # Determine absolute path to the file.
     filepath = SQL_DIR / filename
@@ -52,7 +56,7 @@ def file(filename: str, commit: bool = True) -> SQLite3FetchAll:
         return cursor.fetchall()
 
 
-def query(query_str: str, *args, commit: bool = True) -> SQLite3FetchAll:
+def query(query_str: str, *args, commit: bool = True) -> list[Any]:
     """Execute an SQL query."""
     with open_db(commit=commit) as cursor:
         cursor.execute(query_str, args)
@@ -61,3 +65,13 @@ def query(query_str: str, *args, commit: bool = True) -> SQLite3FetchAll:
 
 def initialize_database() -> None:
     file("initialize_tables", commit=False)
+
+
+def return_as():
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            ...
+
+        return wrapper
+
+    return decorator
