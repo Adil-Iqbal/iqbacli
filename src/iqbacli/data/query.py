@@ -60,15 +60,14 @@ class Query:
         )
 
     def delete(self):
-        sql.query("DELETE FROM query WHERE qid = ?", self.qid)
+        sql.query("DELETE FROM queries WHERE qid = ?", self.qid)
 
-    def get_results(self) -> Optional[list[Result]]:
-        if result_reprs := sql.query(
+    def get_results(self) -> list[Result]:
+        result_reprs = sql.query(
             "SELECT * FROM results WHERE qid = ? ORDER BY rid",
             self.qid,
-        ):
-            return [Result._from_sqlite3(repr) for repr in result_reprs]
-        return None
+        )
+        return [Result._from_sqlite3(repr) for repr in result_reprs]
 
     @staticmethod
     def _from_sqlite3(sql_repr: SQLiteReprQuery) -> Query:
@@ -108,7 +107,6 @@ class Query:
         return None
 
     @staticmethod
-    def list() -> Optional[list[Query]]:
-        if query_reprs := sql.query("SELECT * FROM queries"):
-            return [Query._from_sqlite3(query_repr) for query_repr in query_reprs]
-        return None
+    def list() -> list[Query]:
+        query_reprs = sql.query("SELECT * FROM queries")
+        return [Query._from_sqlite3(query_repr) for query_repr in query_reprs]
