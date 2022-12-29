@@ -30,6 +30,26 @@ def query():
     )
 
 
+@pytest.fixture
+def query_repr():
+    return (
+        -1,
+        "test",
+        "raw_test",
+        "C:\\\\a\\b\\c",
+        "C:\\\\x\\y\\z",
+        True,
+        False,
+        True,
+        "abc,def",
+        "bingo",
+        "bongo",
+        "xyz,lmnop",
+        "honky",
+        "chonky",
+    )
+
+
 @reset_db
 def test_query_save(query: Query) -> None:
     first_len = sql.query("SELECT COUNT(*) FROM queries")[0][0]
@@ -59,28 +79,49 @@ def test_query_from_sqlite3():
     ...
 
 
+@reset_db
 def test_query_get_success():
-    ...
+    query = Query.get(qid=5)
+    assert query.qid == 5
+    assert query.keywords_raw == "fasten7556"
 
 
+@reset_db
 def test_query_get_fail():
-    ...
+    query = Query.get(qid=100)
+    assert query is None
 
 
+@reset_db
 def test_query_get_max_qid_success():
-    ...
+    filepath = sql.SQL_DIR / "sample_query_data.sql"
+    with open(str(filepath), "r") as file:
+        expected_max_qid = file.read().count("queries")
+    max_qid = Query.get_max_qid()
+    assert max_qid == expected_max_qid
 
 
+@reset_db
 def test_query_get_max_qid_fail():
-    ...
+    sql.query("DELETE FROM queries")
+    max_qid = Query.get_max_qid()
+    assert max_qid is None
 
 
+@reset_db
 def test_query_last_success():
-    ...
+    filepath = sql.SQL_DIR / "sample_query_data.sql"
+    with open(str(filepath), "r") as file:
+        expected_qid = file.read().count("queries")
+    query = Query.last()
+    assert query.qid == expected_qid
 
 
+@reset_db
 def test_query_last_fail():
-    ...
+    sql.query("DELETE FROM queries")
+    query = Query.last()
+    assert query is None
 
 
 def test_query_list():
