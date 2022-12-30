@@ -1,8 +1,9 @@
 """
+TODO: RUN PYTEST AND FIX WHAT'S WRONG!!!
 TODO: Test the Query module. The utilities built will also help with test_result.py
 TODO: Start working on result.py & test_result.py. That's secondary to testing query.
 """
-
+import functools
 import pytest
 from iqbacli.data import sql
 from iqbacli.data.query import Query
@@ -11,6 +12,7 @@ from .util import reset_db
 
 
 @pytest.fixture
+@functools.cache
 def query():
     return Query(
         qid=-1,
@@ -31,11 +33,12 @@ def query():
 
 
 @pytest.fixture
+@functools.cache
 def query_repr():
     return (
         -1,
-        "test",
         "raw_test",
+        "test",
         "C:\\\\a\\b\\c",
         "C:\\\\x\\y\\z",
         True,
@@ -48,6 +51,14 @@ def query_repr():
         "honky",
         "chonky",
     )
+
+
+@pytest.fixture
+@functools.cache
+def num_queries():
+    filepath = sql.SQL_DIR / "reset_db.sql"
+    with open(str(filepath), "r") as file:
+        return file.read().count("insert into queries")
 
 
 @reset_db
@@ -75,8 +86,10 @@ def test_query_get_result_empty():
     ...
 
 
-def test_query_from_sqlite3():
-    ...
+def test_query_from_sqlite3(query_repr):
+    query = Query._from_sqlite3(query_repr)
+    assert query.qid == query_repr[0]
+    assert query.keywords_raw == query_repr[1]
 
 
 @reset_db
@@ -93,12 +106,9 @@ def test_query_get_fail():
 
 
 @reset_db
-def test_query_get_max_qid_success():
-    filepath = sql.SQL_DIR / "sample_query_data.sql"
-    with open(str(filepath), "r") as file:
-        expected_max_qid = file.read().count("queries")
+def test_query_get_max_qid_success(num_queries):
     max_qid = Query.get_max_qid()
-    assert max_qid == expected_max_qid
+    assert max_qid == num_queries
 
 
 @reset_db
@@ -109,12 +119,9 @@ def test_query_get_max_qid_fail():
 
 
 @reset_db
-def test_query_last_success():
-    filepath = sql.SQL_DIR / "sample_query_data.sql"
-    with open(str(filepath), "r") as file:
-        expected_qid = file.read().count("queries")
+def test_query_last_success(num_queries):
     query = Query.last()
-    assert query.qid == expected_qid
+    assert query.qid == num_queries
 
 
 @reset_db
@@ -124,5 +131,7 @@ def test_query_last_fail():
     assert query is None
 
 
-def test_query_list():
-    ...
+@reset_db
+def test_query_list(num_queries):
+    query_list = Query.list()
+    assert len(query_list) == num_queries

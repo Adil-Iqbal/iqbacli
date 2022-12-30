@@ -21,11 +21,8 @@ def delete_db(func):
 
 def reset_db(func):
     @functools.wraps(func)
-    @delete_db
     def wrapper(*args, **kwargs):
-        sql.initialize_database()
-        sql.file("sample_query_data")
-        sql.file("sample_result_data")
+        sql.file("reset_db")
         func(*args, **kwargs)
 
     return wrapper
