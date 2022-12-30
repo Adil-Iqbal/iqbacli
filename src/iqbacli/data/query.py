@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+
+from .datatypes import SQLiteReprQuery
+
+
 from typing import Any, Optional
 from . import sql
 import dataclasses
 import functools
 from pathlib import Path
-from .datatypes import SQLiteReprQuery
 from .result import Result
 
 

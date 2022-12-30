@@ -1,7 +1,3 @@
-"""
-TODO: Test the Query module. The utilities built will also help with test_result.py
-TODO: Start working on result.py & test_result.py. That's secondary to testing query.
-"""
 import functools
 import random
 import pytest
@@ -150,7 +146,6 @@ def test_query_list(num_queries):
     assert len(query_list) == num_queries
 
 
-@reset_db
 def test_query_hash_func(query):
     test_qid = random.randint(1, 1000)
     query.qid = test_qid
