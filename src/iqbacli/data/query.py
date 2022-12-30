@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Optional
 from . import sql
 import dataclasses
+import functools
 from pathlib import Path
 from .datatypes import SQLiteReprQuery
 from .result import Result
@@ -25,7 +26,7 @@ class Query:
     ignore_filename: str
     ignore_dirname: str
 
-    def save(self):
+    def save(self: Query) -> None:
         sql.query(
             """
             INSERT INTO queries (
@@ -59,10 +60,11 @@ class Query:
             self.ignore_dirname,
         )
 
-    def delete(self):
+    def delete(self: Query) -> None:
         sql.query("DELETE FROM queries WHERE qid = ?", self.qid)
 
-    def get_results(self) -> list[Result]:
+    @functools.cache
+    def get_results(self: Query) -> list[Result]:
         result_reprs = sql.query(
             "SELECT * FROM results WHERE qid = ? ORDER BY rid",
             self.qid,
@@ -95,6 +97,7 @@ class Query:
         return None
 
     @staticmethod
+    @functools.cache
     def get_max_qid() -> Any:
         if qid_reprs := sql.query("SELECT MAX(qid) FROM queries"):
             return qid_reprs[0][0]
