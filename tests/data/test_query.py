@@ -3,6 +3,7 @@ TODO: Test the Query module. The utilities built will also help with test_result
 TODO: Start working on result.py & test_result.py. That's secondary to testing query.
 """
 import functools
+import random
 import pytest
 from iqbacli.data import sql
 from iqbacli.data.query import Query
@@ -77,12 +78,22 @@ def test_query_delete():
     assert second_len - first_len == -1
 
 
+@reset_db
 def test_query_get_result():
-    ...
+    query = Query.get(qid=1)
+    query.get_results.cache_clear()
+    results = query.get_results()
+    assert len(results) == 2
 
 
+@reset_db
 def test_query_get_result_empty():
-    ...
+    query = Query.get(qid=1)
+    query.get_results.cache_clear()
+    sql.query("DELETE FROM results")
+    results = query.get_results()
+    assert type(results) == list
+    assert len(results) == 0
 
 
 def test_query_from_sqlite3(query_repr):
@@ -137,3 +148,10 @@ def test_query_last_fail():
 def test_query_list(num_queries):
     query_list = Query.list()
     assert len(query_list) == num_queries
+
+
+@reset_db
+def test_query_hash_func(query):
+    test_qid = random.randint(1, 1000)
+    query.qid = test_qid
+    assert hash(query) == test_qid

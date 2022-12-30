@@ -26,6 +26,9 @@ class Query:
     ignore_filename: str
     ignore_dirname: str
 
+    def __hash__(self):
+        return self.qid if self.qid else -1
+
     def save(self: Query) -> None:
         sql.query(
             """
