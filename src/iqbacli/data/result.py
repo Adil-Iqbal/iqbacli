@@ -20,6 +20,9 @@ class Result:
     cache_dir_size: int = 0
     cache_dir: Optional[Path] = None
 
+    def __hash__(self: Result):
+        return self.rid if self.rid else -1
+
     def save(self: Result) -> None:
         sql.query(
             """
