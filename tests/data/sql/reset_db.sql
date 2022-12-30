@@ -41,15 +41,15 @@ insert into queries (keywords_raw, keywords_pattern, directory, output_dir, cach
 insert into queries (keywords_raw, keywords_pattern, directory, output_dir, cache, flat, regex, only_ext, only_filename, only_dirname, ignore_ext, ignore_filename, ignore_dirname) values ('composed07376', 'raw_composed07376', 'FeugiatEt.doc', 'IpsumPrimis.pdf', true, false, false, 'coz,npo,kvw', 'qjyfr,oikyc,svovl', 'irlna,stykj,udwsw', 'xqx,wdo,cab', 'jizpd,racmg,xnrva', 'amtng,azwgd,jcent');
 insert into queries (keywords_raw, keywords_pattern, directory, output_dir, cache, flat, regex, only_ext, only_filename, only_dirname, ignore_ext, ignore_filename, ignore_dirname) values ('fasten7556', 'raw_fasten7556', 'NecEuismod.doc', 'MattisEgestasMetus.mp3', false, true, false, 'jal,aoj,nee', 'xuczm,npoyo,dkofz', 'mawes,suinm,wpuyp', 'msq,ait,tga', 'jxzuh,cajex,ciohn', 'iccbg,ohpfz,waorv');
 
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (1, 186, 9, 6, 4, 8, 'C:\\uktv\ufy\dlip.ryp', 84);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (2, 417, 6, 9, 3, 9, 'C:\\afty\hlv\nzci.wft', 200);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (3, 374, 3, 2, 8, 9, 'C:\\ezva\raq\tkol.aqx', 181);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (4, 226, 1, 4, 6, 6, 'C:\\myzk\ozq\txhi.urs', 108);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (5, 321, 4, 7, 4, 5, 'C:\\aalq\ehd\elad.rtb', 153);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (1, 353, 8, 4, 8, 3, 'C:\\lvnk\oak\zevy.pwp', 167);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (2, 250, 8, 2, 3, 2, 'C:\\noia\ibr\ifjh.ybj', 119);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (3, 216, 3, 3, 9, 3, 'C:\\ttvt\snd\jbqc.unf', 101);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (4, 148, 3, 6, 9, 4, 'C:\\jfrq\grw\ibuu.hel', 65);
-insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (6, 159, 9, 6, 10, 8, 'C:\\scpf\rnb\myix.frf', 67);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (1, 186, 9, 6, 4, 8, 'C:\\uktv\ufy\dlip', 84);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (2, 417, 6, 9, 3, 9, 'C:\\afty\hlv\nzci', 200);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (3, 374, 3, 2, 8, 9, 'C:\\ezva\raq\tkol', 181);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (4, 226, 1, 4, 6, 6, 'C:\\myzk\ozq\txhi', 108);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (5, 321, 4, 7, 4, 5, 'C:\\aalq\ehd\elad', 153);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (1, 353, 8, 4, 8, 3, 'C:\\lvnk\oak\zevy', 167);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (2, 250, 8, 2, 3, 2, 'C:\\noia\ibr\ifjh', 119);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (3, 216, 3, 3, 9, 3, 'C:\\ttvt\snd\jbqc', 101);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (4, 148, 3, 6, 9, 4, 'C:\\jfrq\grw\ibuu', 65);
+insert into results (qid, search_count, unsupported_count, fail_to_parse_count, fail_to_copy_count, cache_dir_size, cache_dir, match_count) values (6, 159, 9, 6, 10, 8, 'C:\\scpf\rnb\myix', 67);
 
 COMMIT;

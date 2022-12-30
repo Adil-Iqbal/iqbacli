@@ -49,6 +49,7 @@ def file(filename: str, commit: bool = True) -> list[Any]:
 
 def query(query_str: str, *args, commit: bool = True) -> list[Any]:
     """Execute an SQL query."""
+    logging.log(logging.CRITICAL, f"running query: {query_str} with args {args}")
     with open_db(commit=commit) as cursor:
         cursor.execute(query_str, args)
         return cursor.fetchall()

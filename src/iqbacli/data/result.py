@@ -51,18 +51,20 @@ class Result:
         sql.query("DELETE FROM results WHERE rid = ?", self.rid)
 
     def cached(self: Result, cache_dir: Path, cache_dir_size: int) -> None:
+        self.cache_dir = cache_dir
+        self.cache_dir_size = cache_dir_size
         sql.query(
-            "UPDATE results SET cached_dir = ?, cache_dir_size = ? WHERE rid = ?",
-            str(cache_dir.absolute()),
-            cache_dir_size,
+            "UPDATE results SET cache_dir = ?, cache_dir_size = ? WHERE rid = ?",
+            str(self.cache_dir.absolute()),
+            self.cache_dir_size,
             self.rid,
         )
 
     def cache_removed(self: Result) -> None:
+        self.cache_dir = None
+        self.cache_dir_size = 0
         sql.query(
-            "UPDATE results SET cached_dir = ?, cache_dir_size = ? WHERE rid = ?",
-            "",
-            0,
+            "UPDATE results SET cache_dir = NULL, cache_dir_size = 0 WHERE rid = ?",
             self.rid,
         )
 
