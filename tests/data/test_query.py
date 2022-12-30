@@ -1,5 +1,4 @@
 """
-TODO: RUN PYTEST AND FIX WHAT'S WRONG!!!
 TODO: Test the Query module. The utilities built will also help with test_result.py
 TODO: Start working on result.py & test_result.py. That's secondary to testing query.
 """
@@ -94,9 +93,9 @@ def test_query_from_sqlite3(query_repr):
 
 @reset_db
 def test_query_get_success():
-    query = Query.get(qid=5)
-    assert query.qid == 5
-    assert query.keywords_raw == "fasten7556"
+    query = Query.get(qid=1)
+    assert query.qid == 1
+    assert query.keywords_raw == "motivate6129"
 
 
 @reset_db
