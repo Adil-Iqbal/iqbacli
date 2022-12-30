@@ -112,6 +112,7 @@ def test_query_get_max_qid_success(num_queries):
 
 @reset_db
 def test_query_get_max_qid_fail():
+    Query.get_max_qid.cache_clear()
     sql.query("DELETE FROM queries")
     max_qid = Query.get_max_qid()
     assert max_qid is None
@@ -119,12 +120,14 @@ def test_query_get_max_qid_fail():
 
 @reset_db
 def test_query_last_success(num_queries):
+    Query.get_max_qid.cache_clear()
     query = Query.last()
     assert query.qid == num_queries
 
 
 @reset_db
 def test_query_last_fail():
+    Query.get_max_qid.cache_clear()
     sql.query("DELETE FROM queries")
     query = Query.last()
     assert query is None
