@@ -69,7 +69,7 @@ class Query:
     def delete(self: Query) -> None:
         sql.query("DELETE FROM queries WHERE qid = ?", self.qid)
 
-    @functools.cache
+    @functools.lru_cache(maxsize=5)
     def get_results(self: Query) -> list[Result]:
         result_reprs = sql.query(
             "SELECT * FROM results WHERE qid = ? ORDER BY rid",

@@ -5,6 +5,7 @@ from pathlib import Path
 import random
 import pytest
 import functools
+from iqbacli.data.datatypes import SQLiteReprResult
 from iqbacli.data.result import Result
 from iqbacli.data import sql
 from .util import reset_db
@@ -16,6 +17,30 @@ def result() -> Result:
     return Result(
         rid=-1, qid=-1, cache_dir_size=100, cache_dir=Path(__file__).parent.absolute()
     )
+
+
+@pytest.fixture
+@functools.cache
+def result_repr() -> SQLiteReprResult:
+    return (
+        -1,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        "C:\\a\\b\\c",
+    )
+
+
+@pytest.fixture
+@functools.cache
+def num_results():
+    filepath = sql.SQL_DIR / "reset_db.sql"
+    with open(str(filepath), "r") as file:
+        return file.read().count("insert into results")
 
 
 def test_result_hash_func(result: Result) -> None:
@@ -60,12 +85,30 @@ def test_result_cached() -> None:
 
 def test_result_cache_removed() -> None:
     result = Result.get(rid=1)
-
     result.cache_removed()
-
     assert result.cache_dir is None
     assert result.cache_dir_size == 0
 
     new_result = Result.get(rid=1)
     assert new_result.cache_dir is None
     assert new_result.cache_dir_size == 0
+
+
+def test_result_from_sqlite3(result_repr: SQLiteReprResult) -> None:
+    result = Result._from_sqlite3(result_repr)
+    assert result.rid == result_repr[0]
+    assert result.qid == result_repr[1]
+    assert str(result.cache_dir.absolute()) == result_repr[8]
+
+
+@reset_db
+def test_result_get_success() -> None:
+    result = Result.get(rid=1)
+    assert result.rid == 1
+    assert str(result.cache_dir.absolute()) == r"C:\uktv\ufy\dlip"
+
+
+@reset_db
+def test_result_get_fail(num_results: int) -> None:
+    result = Result.get(rid=num_results + 1)
+    assert result is None
