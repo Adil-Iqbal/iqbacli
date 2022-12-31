@@ -56,4 +56,4 @@ def query(query_str: str, *args, commit: bool = True) -> list[Any]:
 
 
 def initialize_database() -> None:
-    file("initialize_tables", commit=False)
+    file("initialize_tables")

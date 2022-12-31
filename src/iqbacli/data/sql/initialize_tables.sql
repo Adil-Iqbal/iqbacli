@@ -1,5 +1,3 @@
-BEGIN TRANSACTION;
-
 CREATE TABLE IF NOT EXISTS queries (
     qid INTEGER PRIMARY KEY,
     keywords_raw VARCHAR(500) NOT NULL,
@@ -25,9 +23,7 @@ CREATE TABLE IF NOT EXISTS results (
     unsupported_count INTEGER NOT NULL,
     fail_to_parse_count INTEGER NOT NULL,
     fail_to_copy_count INTEGER NOT NULL,
-    cache_dir_size INTEGER,
+    cache_dir_size INTEGER NOT NULL,
     cache_dir VARCHAR(500),
     FOREIGN KEY (qid) REFERENCES query (qid) ON DELETE CASCADE
 );
-
-COMMIT;

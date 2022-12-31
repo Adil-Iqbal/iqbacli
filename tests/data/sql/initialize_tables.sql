@@ -1,5 +1,3 @@
--- This is a fake initialize tables file.BEGIN TRANSACTION;
-
 CREATE TABLE IF NOT EXISTS queries (
     qid INTEGER PRIMARY KEY,
     keywords_raw VARCHAR(500) NOT NULL,
@@ -29,5 +27,3 @@ CREATE TABLE IF NOT EXISTS results (
     cache_dir VARCHAR(500),
     FOREIGN KEY (qid) REFERENCES query (qid) ON DELETE CASCADE
 );
-
-COMMIT;
