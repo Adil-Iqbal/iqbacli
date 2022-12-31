@@ -112,3 +112,38 @@ def test_result_get_success() -> None:
 def test_result_get_fail(num_results: int) -> None:
     result = Result.get(rid=num_results + 1)
     assert result is None
+
+
+@reset_db
+def test_result_get_max_rid_success(num_results: int) -> None:
+    max_rid = Result.get_max_rid()
+    assert max_rid == num_results
+
+
+@reset_db
+def test_result_get_max_rid_fail() -> None:
+    Result.get_max_rid.cache_clear()
+    sql.query("DELETE FROM results")
+    max_rid = Result.get_max_rid()
+    assert max_rid is None
+
+
+@reset_db
+def test_result_last_success(num_results: int) -> None:
+    Result.get_max_rid.cache_clear()
+    result = Result.last()
+    assert result.rid == num_results
+
+
+@reset_db
+def test_result_last_fail() -> None:
+    Result.get_max_rid.cache_clear()
+    sql.query("DELETE FROM results")
+    result = Result.last()
+    assert result is None
+
+
+@reset_db
+def test_result_list(num_results: int) -> None:
+    result_list = Result.list()
+    assert len(result_list) == num_results
