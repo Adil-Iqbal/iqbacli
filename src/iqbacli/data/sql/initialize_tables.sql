@@ -1,18 +1,18 @@
 CREATE TABLE IF NOT EXISTS queries (
     qid INTEGER PRIMARY KEY,
-    keywords_raw VARCHAR(500) NOT NULL,
-    keywords_pattern VARCHAR(1500) NOT NULL,
-    directory VARCHAR(500) NOT NULL,
-    output_dir VARCHAR(500),
+    keywords_raw TEXT NOT NULL,
+    keywords_pattern TEXT NOT NULL,
+    directory TEXT NOT NULL,
+    output_dir TEXT,
     cache BOOLEAN NOT NULL,
     flat BOOLEAN NOT NULL,
     regex BOOLEAN NOT NULL, 
-    only_ext VARCHAR(500),
-    only_filename VARCHAR(500),
-    only_dirname VARCHAR(500),
-    ignore_ext VARCHAR(500),
-    ignore_filename VARCHAR(500),
-    ignore_dirname VARCHAR(500)
+    only_ext TEXT,
+    only_filename TEXT,
+    only_dirname TEXT,
+    ignore_ext TEXT,
+    ignore_filename TEXT,
+    ignore_dirname TEXT
 );
 
 CREATE TABLE IF NOT EXISTS results (
@@ -24,6 +24,6 @@ CREATE TABLE IF NOT EXISTS results (
     fail_to_parse_count INTEGER NOT NULL,
     fail_to_copy_count INTEGER NOT NULL,
     cache_dir_size INTEGER NOT NULL,
-    cache_dir VARCHAR(500),
+    cache_dir TEXT,
     FOREIGN KEY (qid) REFERENCES query (qid) ON DELETE CASCADE
 );
