@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-import logging
 import sqlite3
 from typing import Any, Generator, Final
 from contextlib import contextmanager
+from ..logging import create_logger
+
+logger = create_logger(__name__)
 
 SQL_EXT: Final[str] = ".sql"
 BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
@@ -19,7 +21,7 @@ def open_db(commit: bool = True) -> Generator[sqlite3.Cursor, None, None]:
     try:
         yield connection.cursor()
     except sqlite3.Error as err:
-        logging.error(err)
+        logger.error(err)
     finally:
         if commit:
             connection.commit()
@@ -49,7 +51,7 @@ def file(filename: str, commit: bool = True) -> list[Any]:
 
 def query(query_str: str, *args, commit: bool = True) -> list[Any]:
     """Execute an SQL query."""
-    logging.log(logging.CRITICAL, f"running query: {query_str} with args {args}")
+    logger.debug(f"running query: {query_str} with args {args}")
     with open_db(commit=commit) as cursor:
         cursor.execute(query_str, args)
         return cursor.fetchall()

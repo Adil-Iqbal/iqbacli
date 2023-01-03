@@ -6,6 +6,9 @@ import functools
 from pathlib import Path
 from typing import Optional, Any
 from .datatypes import SQLiteReprResult
+from ..logging import create_logger
+
+logger = create_logger(__name__)
 
 
 @dataclasses.dataclass
@@ -24,6 +27,7 @@ class Result:
         return self.rid if self.rid else -1
 
     def save(self: Result) -> None:
+        logger.info(f"saving result: {self.qid=} {self.rid=}")
         sql.query(
             """
             INSERT INTO results (
@@ -48,9 +52,14 @@ class Result:
         )
 
     def delete(self: Result) -> None:
+        logger.info(f"deleting result: {self.qid=} {self.rid=}")
         sql.query("DELETE FROM results WHERE rid = ?", self.rid)
 
     def cached(self: Result, cache_dir: Path, cache_dir_size: int) -> None:
+        logger.info(
+            f"marking as cached result: {self.qid=} {self.rid=} "
+            + f"{cache_dir=} {cache_dir_size=}"
+        )
         self.cache_dir = cache_dir
         self.cache_dir_size = cache_dir_size
         sql.query(
@@ -61,6 +70,7 @@ class Result:
         )
 
     def cache_removed(self: Result) -> None:
+        logger.info(f"marking removed cache from result: {self.qid=} {self.rid=}")
         self.cache_dir = None
         self.cache_dir_size = 0
         sql.query(
@@ -70,7 +80,8 @@ class Result:
 
     @staticmethod
     def _from_sqlite3(sql_repr: SQLiteReprResult) -> Result:
-        return Result(
+
+        result = Result(
             rid=sql_repr[0],
             qid=sql_repr[1],
             search_count=sql_repr[2],
@@ -81,9 +92,12 @@ class Result:
             cache_dir_size=sql_repr[7],
             cache_dir=Path(sql_repr[8]) if sql_repr[8] else None,
         )
+        logger.debug(f"new result object created {result=} from {sql_repr=}")
+        return result
 
     @staticmethod
     def get(rid: int) -> Optional[Result]:
+        logger.info(f"getting result from db with {rid=}")
         if result_reprs := sql.query("SELECT * FROM results WHERE rid = ?", rid):
             return Result._from_sqlite3(result_reprs[0])
         return None
@@ -92,16 +106,20 @@ class Result:
     @functools.cache
     def get_max_rid() -> Any:
         if rid_reprs := sql.query("SELECT MAX(rid) FROM results"):
+            logger.info(f"got max rid {rid_reprs[0][0]}")
             return rid_reprs[0][0]
+        logger.info("max id not found")
         return None
 
     @staticmethod
     def last() -> Optional[Result]:
+        logger.info("getting last produced result if any")
         if (max_rid := Result.get_max_rid()) is not None:
             return Result.get(rid=max_rid)
         return None
 
     @staticmethod
     def list() -> list[Result]:
+        logger.info("getting list of results from db")
         result_reprs = sql.query("SELECT * FROM results")
         return [Result._from_sqlite3(result_repr) for result_repr in result_reprs]
