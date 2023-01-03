@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS results (
     unsupported_count INTEGER NOT NULL,
     fail_to_parse_count INTEGER NOT NULL,
     fail_to_copy_count INTEGER NOT NULL,
-    cache_dir_size INTEGER NOT NULL,
+    cache_dir_size INTEGER,
     cache_dir TEXT,
     FOREIGN KEY (qid) REFERENCES query (qid) ON DELETE CASCADE
 );
