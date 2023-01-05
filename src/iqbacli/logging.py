@@ -80,4 +80,4 @@ def create_logger(filepath: str) -> Logger:
 
 
 def log_sys_argv(logger: Logger) -> None:
-    logger.info(f"SYS ARGV: iqba {' '.join(sys.argv[1:])}")
+    logger.critical(f"SYS ARGV: iqba {' '.join(sys.argv[1:])}")
