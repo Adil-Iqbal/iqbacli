@@ -8,18 +8,44 @@ app = typer.Typer(
 )
 
 
+def _resolve_keywords(keywords: Optional[str], regex: bool) -> str:
+    if keywords is None and not regex:
+        kw = typer.prompt("Please enter a comma-seperated list of keywords: ")
+    elif keywords is None and regex:
+        kw = typer.prompt("Please enter a regular expression: ")
+    if type(kw) != str:
+        raise typer.Abort()
+    return kw
+
+
 @app.callback(invoke_without_command=True)
 def search(
-    directory: Path,
-    keywords: str,
+    directory: Path = typer.Argument(
+        ...,
+        help="The directory to be searched.",
+        file_okay=False,
+        dir_okay=True,
+        exists=True,
+    ),
+    keywords: Optional[str] = typer.Argument(
+        default=None, help="A comma-seperated list of keywords to look for."
+    ),
     output_dir: Optional[Path] = typer.Option(
         default=builtins.OUTPUT_DIR,
+        envvar="IQBA_OUTPUT_DIR",
+        show_envvar=False,
         show_default=False,
+        file_okay=False,
+        dir_okay=True,
+        exists=True,
         help="Copy matching files into this directory.",
     ),
     params: Optional[Path] = typer.Option(
         default=builtins.PARAMS,
         show_default=False,
+        file_okay=True,
+        dir_okay=False,
+        exists=True,
         help="Pass in command arguments from a JSON file.",
     ),
     id: Optional[int] = typer.Option(
@@ -82,4 +108,5 @@ def search(
     Search all files in `directory` for the keywords `keywords`.\n
     (Example) iqba search "C:\\\\path\\\\to\\\\directory" "foo,bar,baz"
     """
+    keywords = _resolve_keywords(keywords=keywords, regex=regex)
     print("search")
