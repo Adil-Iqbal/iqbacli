@@ -22,7 +22,7 @@ def create_logger(filepath: str) -> Logger:
         dev_logger.setLevel(logging.INFO)
         dev_handler = StreamHandler()
         dev_formatter = Formatter(
-            fmt="%(levelname)s | %(name)s:%(lineno)d | %(asctime)s | %(message)s"
+            fmt="%(asctime)s | %(levelname)s | %(name)s:%(lineno)d | %(message)s",
         )
         dev_handler.setFormatter(dev_formatter)
         dev_logger.addHandler(dev_handler)

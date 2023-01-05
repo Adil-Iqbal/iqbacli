@@ -29,7 +29,7 @@ class Result:
         return hash_value
 
     def save(self: Result) -> None:
-        logger.info(f"saving result: {self}")
+        logger.info(f"saving result to db: {self}")
         sql.query(
             """
             INSERT INTO results (
@@ -54,12 +54,12 @@ class Result:
         )
 
     def delete(self: Result) -> None:
-        logger.info(f"deleting result: {self.qid=} {self.rid=}")
+        logger.info(f"deleting result from db: {self.qid=} {self.rid=}")
         sql.query("DELETE FROM results WHERE rid = ?", self.rid)
 
     def cached(self: Result, cache_dir: Path, cache_dir_size: int) -> None:
         logger.info(
-            f"marking as cached result: {self.qid=} {self.rid=} "
+            f"marking as cached result in db: {self.qid=} {self.rid=} "
             + f"{cache_dir=} {cache_dir_size=}"
         )
         self.cache_dir = cache_dir
@@ -72,7 +72,7 @@ class Result:
         )
 
     def cache_removed(self: Result) -> None:
-        logger.info(f"marking removed cache from result: {self.qid=} {self.rid=}")
+        logger.info(f"marking removed cache from result in db: {self.qid=} {self.rid=}")
         self.cache_dir = None
         self.cache_dir_size = 0
         sql.query(
@@ -108,14 +108,14 @@ class Result:
     @functools.cache
     def get_max_rid() -> Any:
         if rid_reprs := sql.query("SELECT MAX(rid) FROM results"):
-            logger.info(f"got max rid {rid_reprs[0][0]}")
+            logger.info(f"got max rid {rid_reprs[0][0]} from db")
             return rid_reprs[0][0]
-        logger.info("max id not found")
+        logger.info("max id not found in db")
         return None
 
     @staticmethod
     def last() -> Optional[Result]:
-        logger.info("getting last produced result if any")
+        logger.info("getting last produced result from db if any")
         if (max_rid := Result.get_max_rid()) is not None:
             return Result.get(rid=max_rid)
         return None
