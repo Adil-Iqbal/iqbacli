@@ -10,6 +10,9 @@ import dataclasses
 import functools
 from pathlib import Path
 from .result import Result
+from ..logging import create_logger
+
+logger = create_logger(__file__)
 
 
 @dataclasses.dataclass
@@ -30,9 +33,12 @@ class Query:
     ignore_dirname: str
 
     def __hash__(self):
-        return self.qid if self.qid else -1
+        hash_value = self.qid if self.qid else -1
+        logger.debug(f"query hashed to {hash_value=}")
+        return hash_value
 
     def save(self: Query) -> None:
+        logger.info(f"saving query to db {self}")
         sql.query(
             """
             INSERT INTO queries (
@@ -67,10 +73,12 @@ class Query:
         )
 
     def delete(self: Query) -> None:
+        logger.info(f"deleting query from db {self.qid=}")
         sql.query("DELETE FROM queries WHERE qid = ?", self.qid)
 
     @functools.lru_cache(maxsize=5)
     def get_results(self: Query) -> list[Result]:
+        logger.info(f"getting results for query from db {self.qid=}")
         result_reprs = sql.query(
             "SELECT * FROM results WHERE qid = ? ORDER BY rid",
             self.qid,
@@ -79,7 +87,7 @@ class Query:
 
     @staticmethod
     def _from_sqlite3(sql_repr: SQLiteReprQuery) -> Query:
-        return Query(
+        query = Query(
             qid=sql_repr[0],
             keywords_raw=sql_repr[1],
             keywords_pattern=sql_repr[2],
@@ -95,27 +103,35 @@ class Query:
             ignore_filename=sql_repr[12],
             ignore_dirname=sql_repr[13],
         )
+        logger.debug(f"new query object created {query=} from sqlite repr {sql_repr=}")
+        return query
 
     @staticmethod
     def get(qid: int) -> Optional[Query]:
         if query_reprs := sql.query("SELECT * FROM queries WHERE qid = ?", qid):
+            logger.info(f"getting query from db with {qid=}")
             return Query._from_sqlite3(query_reprs[0])
+        logger.info(f"query with {qid=} not found in db")
         return None
 
     @staticmethod
     @functools.cache
     def get_max_qid() -> Any:
         if qid_reprs := sql.query("SELECT MAX(qid) FROM queries"):
+            logger.info(f"got max qid from db {qid_reprs[0][0]}")
             return qid_reprs[0][0]
+        logger.info("max qid not found in db")
         return None
 
     @staticmethod
     def last() -> Optional[Query]:
+        logger.info("getting last query from db")
         if (max_qid := Query.get_max_qid()) is not None:
             return Query.get(qid=max_qid)
         return None
 
     @staticmethod
     def list() -> list[Query]:
+        logger.info("getting list of queries from db")
         query_reprs = sql.query("SELECT * FROM queries")
         return [Query._from_sqlite3(query_repr) for query_repr in query_reprs]

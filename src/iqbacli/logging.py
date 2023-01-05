@@ -1,9 +1,12 @@
 import os
 import dotenv
 import logging
+from pathlib import Path
 from logging import Logger, NullHandler, StreamHandler, Formatter
 
 dotenv.load_dotenv()
+
+BASE_DIR = Path(__file__).parent.resolve()
 
 
 def create_logger(name: str) -> Logger:

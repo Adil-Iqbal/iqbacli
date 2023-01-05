@@ -8,7 +8,7 @@ from typing import Optional, Any
 from .datatypes import SQLiteReprResult
 from ..logging import create_logger
 
-logger = create_logger(__name__)
+logger = create_logger(__file__)
 
 
 @dataclasses.dataclass
@@ -24,10 +24,12 @@ class Result:
     cache_dir: Optional[Path] = None
 
     def __hash__(self: Result):
-        return self.rid if self.rid else -1
+        hash_value = self.rid if self.rid else -1
+        logger.debug(f"result hashed to {hash_value=}")
+        return hash_value
 
     def save(self: Result) -> None:
-        logger.info(f"saving result: {self.qid=} {self.rid=}")
+        logger.info(f"saving result: {self}")
         sql.query(
             """
             INSERT INTO results (

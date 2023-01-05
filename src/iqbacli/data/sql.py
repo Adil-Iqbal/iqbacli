@@ -6,7 +6,7 @@ from typing import Any, Generator, Final
 from contextlib import contextmanager
 from ..logging import create_logger
 
-logger = create_logger(__name__)
+logger = create_logger(__file__)
 
 SQL_EXT: Final[str] = ".sql"
 BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
