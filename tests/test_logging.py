@@ -1,38 +1,17 @@
 import sys
 import logging
-from iqbacli.logging import log_sys_argv
+from iqbacli.logging import _create_prod_logger, log_sys_argv
 
 
-class FakeLogger:
-    def __init__(self, name: str):
-        self.name = name
-        self.log_level = logging.NOTSET
-        self.message = None
-
-    def critical(self, message):
-        self.log_level = logging.CRITICAL
-        self.message = message
+def test_log_sys_argv(monkeypatch, caplog):
+    caplog.clear()
+    monkeypatch.setattr(sys, "argv", [str(n) for n in range(3)])
+    log_sys_argv(logging.getLogger())
+    assert caplog.record_tuples == [("root", logging.CRITICAL, "SYS ARGV: iqba 1 2")]
 
 
-def test_log_sys_argv(monkeypatch):
-    fake_logger = FakeLogger("test")
-    monkeypatch.setattr(sys, "argv", [str(n) for n in range(5)])
-    log_sys_argv(fake_logger)
-    assert fake_logger.message == "SYS ARGV: iqba 1 2 3 4"
-    assert fake_logger.log_level == logging.CRITICAL
-
-
-def test_create_logger_prod():
-    ...
-
-
-def test_create_logger_dev():
-    ...
-
-
-def test_create_logger_dev_with_stream():
-    ...
-
-
-def test_create_logger_dev_different_log_levels():
-    ...
+def test_create_logger_prod(caplog):
+    caplog.clear()
+    logger = _create_prod_logger("foo")
+    logger.info("bar")
+    assert len(caplog.record_tuples) == 0

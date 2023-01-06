@@ -66,9 +66,8 @@ def _create_dev_logger(relpath: str) -> Logger:
 
 
 def _create_prod_logger(relpath: str) -> Logger:
-    prod_handler = NullHandler()
     prod_logger = logging.getLogger(relpath)
-    prod_logger.addHandler(prod_handler)
+    prod_logger.addHandler(NullHandler())
     return prod_logger
 
 
