@@ -29,6 +29,7 @@ class Config:
     def _to_dict(self: Config) -> dict[str, Any]:
         config = copy.deepcopy(self.__dict__)
         del config["config_path"]
+
         logger.debug(f"converting to dict: {config=}")
         return config
 

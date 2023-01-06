@@ -17,7 +17,14 @@ def test_create_new_config():
 
 
 def test_config_to_dict():
-    ...
+    test_config_path = Path(__file__).parent.resolve() / "config.json"
+    try:
+        config_dict = Config.create_new_config(test_config_path)._to_dict()
+        assert config_dict["cache"] == builtins.CACHE
+        assert config_dict["flat"] == builtins.FLAT
+        assert config_dict["regex"] == builtins.REGEX
+    finally:
+        test_config_path.unlink(missing_ok=True)
 
 
 def test_config_save():
