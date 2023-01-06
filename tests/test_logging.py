@@ -10,7 +10,7 @@ def test_log_sys_argv(monkeypatch, caplog):
     assert caplog.record_tuples == [("root", logging.CRITICAL, "SYS ARGV: iqba 1 2")]
 
 
-def test_create_logger_prod(caplog):
+def test_create_prod_logger(caplog):
     caplog.clear()
     logger = _create_prod_logger("foo")
     logger.info("bar")
