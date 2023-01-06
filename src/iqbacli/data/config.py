@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import copy
 import json
 import dataclasses
+from typing import Any
 from pathlib import Path
 from ..params import builtins
 from ..logging import create_logger
@@ -24,22 +26,15 @@ class Config:
     max_cached: int
     max_cache_size: int
 
+    def _to_dict(self: Config) -> dict[str, Any]:
+        config = copy.deepcopy(self.__dict__)
+        del config["config_path"]
+        logger.debug(f"converting to dict: {config=}")
+        return config
+
     def save(self) -> None:
         logger.info("saving config file.")
-        config = {
-            "cache": self.cache,
-            "flat": self.flat,
-            "regex": self.regex,
-            "only_ext": self.only_ext,
-            "only_filename": self.only_filename,
-            "only_dirname": self.only_dirname,
-            "ignore_ext": self.ignore_ext,
-            "ignore_filename": self.ignore_filename,
-            "ignore_dirname": self.ignore_dirname,
-            "max_cached": self.max_cached,
-            "max_cache_size": self.max_cache_size,
-        }
-        logger.debug(f"saving config file with {config=}")
+        config = self._to_dict()
         with open(str(self.config_path.absolute()), "w") as config_file:
             json.dump(config, config_file)
 
