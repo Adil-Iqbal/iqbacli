@@ -7,6 +7,6 @@ app = typer.Typer(short_help="Display path to configuration file.")
 def path():
     """
     Display path to configuration file.\n
-    (Example) iqba config path
+    (example) iqba config path
     """
     print("path")

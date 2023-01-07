@@ -11,7 +11,8 @@ def reset(
 ):
     """
     Reset entire configuration. / Reset a specific parameter.
-    (Entire config) iqba config reset
-    (Just a param) iqba config reset "ignore-filename"
+    (entire config) iqba config reset
+    (just a param)  iqba config reset ignore-filename
+    (just a param)  iqba config reset ==param ignore-filename
     """
     print(f"reset id: {param}")
