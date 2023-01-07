@@ -31,9 +31,12 @@ def test_create_new_config(config_path):
 
 def test_config_to_dict(sample_config: Config):
     config_dict = sample_config._to_dict()
-    assert config_dict["cache"] == builtins.CACHE
-    assert config_dict["flat"] == builtins.FLAT
-    assert config_dict["regex"] == builtins.REGEX
+    assert "cache" in config_dict
+    assert "flat" in config_dict
+    assert "regex" in config_dict
+    assert config_dict["cache"] == sample_config.cache
+    assert config_dict["flat"] == sample_config.flat
+    assert config_dict["regex"] == sample_config.regex
 
 
 def test_config_save(sample_config: Config, config_path: Path):
