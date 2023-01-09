@@ -1,22 +1,20 @@
 from __future__ import annotations
 
-from pathlib import Path
 import sqlite3
 from typing import Any, Generator, Final
 from contextlib import contextmanager
 from ..logging import create_logger
+from ..paths import SQL_DIR, DB_PATH
 
 logger = create_logger(__file__)
 
 SQL_EXT: Final[str] = ".sql"
-BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
-SQL_DIR: Final[Path] = BASE_DIR / "sql"
-DB_PATH: Final[Path] = SQL_DIR / "database.sqlite3"
 
 
 @contextmanager
 def open_db(commit: bool = True) -> Generator[sqlite3.Cursor, None, None]:
     db_path = str(DB_PATH.absolute())
+    logger.debug(f"{db_path=}")
     connection = sqlite3.connect(db_path)
     try:
         yield connection.cursor()

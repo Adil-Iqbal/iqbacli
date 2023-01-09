@@ -1,2 +1,3 @@
 typer==0.7.0
 python-dotenv==0.21.0
+platformdirs==2.6.2

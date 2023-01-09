@@ -1,17 +1,14 @@
 import os
 import sys
-from typing import Final
-import datetime
 import dotenv
-import logging
+import datetime
+from typing import Final
 from pathlib import Path
+from .paths import BASE_DIR, LOG_DIR
+import logging
 from logging import FileHandler, Logger, NullHandler, StreamHandler, Formatter
 
 dotenv.load_dotenv()
-
-BASE_DIR: Final[Path] = Path(__file__).parent.resolve()
-SRC_DIR: Final[Path] = BASE_DIR.parent.parent.resolve()
-LOG_DIR: Final[Path] = SRC_DIR / "logs"
 
 
 def _create_log_file_path() -> str:

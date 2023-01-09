@@ -1,13 +1,17 @@
-from iqbacli import cli
+import dotenv
+from iqbacli import cli, driver
+from .paths import log_paths
 from .logging import create_logger, log_sys_argv
-from iqbacli.data.sql import initialize_database
 
+
+dotenv.load_dotenv()
 logger = create_logger(__file__)
 
 
 def main():
     log_sys_argv(logger)
-    initialize_database()
+    log_paths(logger)
+    driver.init()
     cli.app()
 
 
