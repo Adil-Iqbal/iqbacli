@@ -102,6 +102,7 @@ class Result:
         logger.info(f"getting result from db with {rid=}")
         if result_reprs := sql.query("SELECT * FROM results WHERE rid = ?", rid):
             return Result._from_sqlite3(result_reprs[0])
+        logger.info(f"result with {rid=} not found")
         return None
 
     @staticmethod

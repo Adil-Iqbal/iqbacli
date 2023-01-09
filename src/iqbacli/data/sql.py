@@ -56,6 +56,5 @@ def query(query_str: str, *args, commit: bool = True) -> list[Any]:
 
 
 def initialize_database() -> None:
-    logger.debug(f"Initializing with database path: {DB_PATH}")
-    logger.debug(f"Initializing with SQL directory: {SQL_DIR}")
+    logger.info("initializing database")
     file("initialize_tables")

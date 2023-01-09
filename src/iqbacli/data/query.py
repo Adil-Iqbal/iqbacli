@@ -108,14 +108,14 @@ class Query:
 
     @staticmethod
     def get(qid: int) -> Optional[Query]:
+        logger.info(f"getting query from db with {qid=}")
         if query_reprs := sql.query("SELECT * FROM queries WHERE qid = ?", qid):
-            logger.info(f"getting query from db with {qid=}")
             return Query._from_sqlite3(query_reprs[0])
         logger.info(f"query with {qid=} not found in db")
         return None
 
     @staticmethod
-    @functools.cache
+    @functools.lru_cache(maxsize=1)
     def get_max_qid() -> Any:
         if qid_reprs := sql.query("SELECT MAX(qid) FROM queries"):
             logger.info(f"got max qid from db {qid_reprs[0][0]}")
