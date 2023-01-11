@@ -49,8 +49,7 @@ def _resolve_log_streaming(logger: Logger) -> None:
         logger.addHandler(stream_handler)
 
 
-def _create_dev_logger(relpath: str) -> Logger:
-    dev_logger = logging.getLogger(relpath)
+def _create_dev_logger(dev_logger: Logger) -> Logger:
     _create_log_dir_if_needed()
 
     dev_logger.setLevel(_resolve_log_level())
@@ -62,17 +61,17 @@ def _create_dev_logger(relpath: str) -> Logger:
     return dev_logger
 
 
-def _create_prod_logger(relpath: str) -> Logger:
-    prod_logger = logging.getLogger(relpath)
+def _create_prod_logger(prod_logger: Logger) -> Logger:
     prod_logger.addHandler(NullHandler())
     return prod_logger
 
 
 def create_logger(filepath: str) -> Logger:
     relpath = _get_relative_path(filepath)
+    logger = logging.getLogger(relpath)
     if os.getenv("IQBA_ENV") == "dev":
-        return _create_dev_logger(relpath)
-    return _create_prod_logger(relpath)
+        return _create_dev_logger(logger)
+    return _create_prod_logger(logger)
 
 
 def log_sys_argv(logger: Logger) -> None:
