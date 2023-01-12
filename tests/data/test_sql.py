@@ -82,8 +82,7 @@ def test_sql_file_can_read(conn: FakeSQLite3Connection):
     assert conn.commit_called
     assert conn.cursor_object.executescript_called
     assert conn.cursor_object.fetchall_called
-    with open(str(filepath), "r") as file:
-        assert file.read() == conn.cursor_object.excutescript_script_arg
+    filepath.read_text() == conn.cursor_object.excutescript_script_arg
 
 
 def test_sql_file_can_read_without_file_ext(conn: FakeSQLite3Connection):
@@ -93,8 +92,7 @@ def test_sql_file_can_read_without_file_ext(conn: FakeSQLite3Connection):
     assert conn.commit_called
     assert conn.cursor_object.executescript_called
     assert conn.cursor_object.fetchall_called
-    with open(str(filepath), "r") as file:
-        assert file.read() == conn.cursor_object.excutescript_script_arg
+    filepath.read_text() == conn.cursor_object.excutescript_script_arg
 
 
 def test_sql_file_with_commit_override(conn: FakeSQLite3Connection):
@@ -107,5 +105,4 @@ def test_initialize_database_func(conn: FakeSQLite3Connection):
     filename = "initialize_tables.sql"
     filepath = sql.SQL_DIR / filename
     sql.initialize_database()
-    with open(str(filepath), "r") as file:
-        assert file.read() == conn.cursor_object.excutescript_script_arg
+    filepath.read_text() == conn.cursor_object.excutescript_script_arg

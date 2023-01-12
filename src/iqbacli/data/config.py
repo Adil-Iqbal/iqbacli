@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import copy
 import json
 import dataclasses
 from typing import Any
 from pathlib import Path
+import humps
 from ..params import builtins
 from ..logging import create_logger
 
@@ -27,16 +27,19 @@ class Config:
     max_cache_size: int
 
     def _to_dict(self: Config) -> dict[str, Any]:
-        config = copy.deepcopy(self.__dict__)
-        del config["config_path"]
+        config_dict = {
+            humps.kebabize(k): v
+            for k, v in self.__dict__.items()
+            if not k.startswith("config_")
+        }
 
-        logger.debug(f"converting to dict: {config=}")
-        return config
+        logger.debug(f"converting to dict: {config_dict=}")
+        return config_dict
 
     def save(self) -> None:
         logger.info("saving config file.")
         config = self._to_dict()
-        with open(str(self.config_path.absolute()), "w") as config_file:
+        with self.config_path.open("w") as config_file:
             json.dump(config, config_file)
 
     @staticmethod
@@ -44,8 +47,12 @@ class Config:
         if not config_path.exists() or not config_path.is_file():
             return Config.create_new_config(config_path)
         logger.info(f"getting config json file at {config_path=}")
-        with open(str(config_path.absolute()), "r") as config_file:
-            return Config(config_path=config_path, **json.load(config_file))
+        with config_path.open("r") as config_file:
+            config_dict = {
+                humps.dekebabize(k): v for k, v in json.load(config_file).items()
+            }
+            logger.debug(f"get config, created {config_dict=}")
+            return Config(config_path=config_path, **config_dict)
 
     @staticmethod
     def create_new_config(config_path: Path) -> Config:

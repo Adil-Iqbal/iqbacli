@@ -39,8 +39,7 @@ def result_repr() -> SQLiteReprResult:
 @functools.cache
 def num_results():
     filepath = sql.SQL_DIR / "reset_db.sql"
-    with open(str(filepath), "r") as file:
-        return file.read().count("insert into results")
+    return filepath.read_text().count("insert into results")
 
 
 def test_result_hash_func(result: Result) -> None:

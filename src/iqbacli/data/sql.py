@@ -34,12 +34,10 @@ def file(filename: str, commit: bool = True) -> list[Any]:
         filename += SQL_EXT
 
     # Determine absolute path to the file.
-    filepath = SQL_DIR / filename
+    sql_file = SQL_DIR / filename
 
     # Read SQL file.
-    filepath_str = str(filepath.absolute())
-    with open(filepath_str, "r") as sql_file:
-        script = sql_file.read()
+    script = sql_file.read_text()
 
     # Execute file and return results.
     with open_db(commit=commit) as cursor:

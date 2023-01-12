@@ -53,8 +53,7 @@ def query_repr():
 @functools.cache
 def num_queries():
     filepath = sql.SQL_DIR / "reset_db.sql"
-    with open(str(filepath), "r") as file:
-        return file.read().count("insert into queries")
+    return filepath.read_text().count("insert into queries")
 
 
 @reset_db

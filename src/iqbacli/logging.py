@@ -30,12 +30,6 @@ def _get_relative_path(filepathstr: str) -> str:
     return str(relpath)
 
 
-def _create_log_dir_if_needed() -> None:
-    if LOG_DIR.exists() and LOG_DIR.is_dir():
-        return
-    LOG_DIR.mkdir()
-
-
 def _resolve_log_level():
     if (env := os.getenv("IQBA_LOG_LEVEL")) is not None:
         return logging._nameToLevel[env.upper()]
@@ -50,8 +44,7 @@ def _resolve_log_streaming(logger: Logger) -> None:
 
 
 def _create_dev_logger(dev_logger: Logger) -> Logger:
-    _create_log_dir_if_needed()
-
+    LOG_DIR.mkdir(exist_ok=True)
     dev_logger.setLevel(_resolve_log_level())
     dev_file_handler = FileHandler(LOG_FILE_PATH)
     dev_file_handler.setFormatter(_DEFAULT_LOG_FORMATTER)
