@@ -1,4 +1,5 @@
 import typer
+from iqbacli.driver import config
 
 app = typer.Typer(short_help="Display path to configuration file.")
 
@@ -9,4 +10,4 @@ def path():
     Display path to configuration file.\n
     (example) iqba config path
     """
-    print("path")
+    print(config.get_path())

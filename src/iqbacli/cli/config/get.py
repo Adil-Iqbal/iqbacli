@@ -13,6 +13,5 @@ def get(
     Get entire configuration. / Get a specific parameter.\n
     (entire config) iqba config get\n
     (just a param)  iqba config get --param flat\n
-    (just a param)  iqba config get flat
     """
     print(f"get (with param?) {param}")

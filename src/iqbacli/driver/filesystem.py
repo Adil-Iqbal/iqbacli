@@ -5,6 +5,7 @@ logger = create_logger(__file__)
 
 
 def create_user_data():
-    logger.info("Creating user data directory at {USER_DATA_DIR}")
+    if not USER_DATA_DIR.exists():
+        logger.info(f"Creating user data directory at {USER_DATA_DIR=}")
     USER_DATA_DIR.parent.mkdir(exist_ok=True)
     USER_DATA_DIR.mkdir(exist_ok=True)
