@@ -9,10 +9,14 @@ logger = create_logger(__file__)
 
 
 def main():
-    log_sys_argv(logger)
-    log_paths(logger)
-    driver.init()
-    cli.app()
+    try:
+        log_sys_argv(logger)
+        log_paths(logger)
+        driver.init()
+        cli.app()
+    except Exception as exception:
+        logger.exception(msg="Encountered an exception")
+        raise exception
 
 
 if __name__ == "__main__":

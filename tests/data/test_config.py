@@ -12,7 +12,7 @@ def config_path():
 @pytest.fixture
 def sample_config(config_path):
     try:
-        yield Config.create_new_config(config_path)
+        yield Config.create_new(config_path)
     finally:
         config_path.unlink(missing_ok=True)
 
@@ -20,7 +20,7 @@ def sample_config(config_path):
 def test_create_new_config(config_path):
     try:
         assert not config_path.exists()
-        config = Config.create_new_config(config_path)
+        config = Config.create_new(config_path)
         assert config_path.exists()
         assert config.cache == builtins.CACHE
         assert config.flat == builtins.FLAT
@@ -42,12 +42,12 @@ def test_config_to_dict(sample_config: Config):
 def test_config_save(sample_config: Config, config_path: Path):
     sample_config.ignore_ext = "json"
     sample_config.save()
-    reload_config = Config.get_config(config_path)
+    reload_config = Config.get(config_path)
     assert reload_config.ignore_ext == "json"
 
 
 def test_config_get(sample_config: Config, config_path: Path):
-    reload_config = Config.get_config(config_path)
+    reload_config = Config.get(config_path)
     assert sample_config.cache == reload_config.cache
     assert sample_config.flat == reload_config.flat
     assert sample_config.regex == reload_config.regex

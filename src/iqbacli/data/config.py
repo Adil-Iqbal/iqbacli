@@ -4,11 +4,15 @@ import json
 import dataclasses
 from typing import Any
 from pathlib import Path
-import humps
 from ..params import builtins
 from ..logging import create_logger
 
 logger = create_logger(__file__)
+_OMITTED_FNAME_PREFIX = ("_", "config_path")
+
+
+def is_cfg_field_name(name: str) -> bool:
+    return not name.startswith(_OMITTED_FNAME_PREFIX)
 
 
 @dataclasses.dataclass
@@ -27,12 +31,7 @@ class Config:
     max_cache_size: int
 
     def _to_dict(self: Config) -> dict[str, Any]:
-        config_dict = {
-            humps.kebabize(k): v
-            for k, v in self.__dict__.items()
-            if not k.startswith("config_")
-        }
-
+        config_dict = {k: v for k, v in self.__dict__.items() if is_cfg_field_name(k)}
         logger.debug(f"converting to dict: {config_dict=}")
         return config_dict
 
@@ -43,19 +42,22 @@ class Config:
             json.dump(config, config_file)
 
     @staticmethod
-    def get_config(config_path: Path) -> Config:
-        if not config_path.exists() or not config_path.is_file():
-            return Config.create_new_config(config_path)
+    def get(config_path: Path) -> Config:
         logger.info(f"getting config json file at {config_path=}")
+        try:
+            return Config.get_from_file(config_path)
+        except (TypeError, FileNotFoundError):
+            return Config.create_new(config_path)
+
+    @staticmethod
+    def get_from_file(config_path: Path) -> Config:
         with config_path.open("r") as config_file:
-            config_dict = {
-                humps.dekebabize(k): v for k, v in json.load(config_file).items()
-            }
+            config_dict = {k: v for k, v in json.load(config_file).items()}
             logger.debug(f"get config, created {config_dict=}")
             return Config(config_path=config_path, **config_dict)
 
     @staticmethod
-    def create_new_config(config_path: Path) -> Config:
+    def create_new(config_path: Path) -> Config:
         logger.info("creating new default config")
 
         default_config = Config(
@@ -72,5 +74,13 @@ class Config:
             max_cached=builtins.MAX_CACHED,
             max_cache_size=builtins.MAX_CACHE_SIZE,
         )
+
         default_config.save()
         return default_config
+
+    @staticmethod
+    def is_valid_key(key: str) -> bool:
+        for field in dataclasses.fields(Config):
+            if is_cfg_field_name(field.name) and key == field.name:
+                return True
+        return False

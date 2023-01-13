@@ -1,14 +1,11 @@
 import os
 import sys
-import dotenv
 import datetime
 from typing import Final
 from pathlib import Path
 from .paths import BASE_DIR, LOG_DIR
 import logging
 from logging import FileHandler, Logger, NullHandler, StreamHandler, Formatter
-
-dotenv.load_dotenv()
 
 
 def _create_log_file_path() -> str:
