@@ -1,17 +1,10 @@
 from typing import Any
-import humps
+import json
 import dataclasses
 from pathlib import Path
 from ..paths import CONFIG_PATH
 from ..data.config import Config, is_cfg_field_name
 
-
-name_to_type: dict[Any, Any] = {
-    "str": str,
-    "bool": bool,
-    "int": int,
-    "Path": Path,
-}
 
 str_true: set[str] = {"ok", "1", "yes", "true"}
 
@@ -26,26 +19,38 @@ def str_to_bool(string: str) -> bool:
     return False
 
 
-def get_path() -> str:
-    return str(CONFIG_PATH.absolute())
+name_to_type: dict[Any, Any] = {
+    "str": str,
+    "bool": str_to_bool,
+    "int": int,
+    "Path": Path,
+}
 
 
-# def get_config_param(key: str) -> Any:
-#     key = humps.dekebabize(_key)
+def get_path(config_path: Path = CONFIG_PATH) -> str:
+    return str(config_path.absolute())
 
 
-def set_config_param(_key: str, _value: str) -> Config:
-    key = humps.dekebabize(_key)
+def get_config_dict(config_path: Path = CONFIG_PATH) -> dict[str, Any]:
+    return json.loads(config_path.read_text())
+
+
+def get_valid_config_keys() -> list[str]:
+    return [
+        field.name
+        for field in dataclasses.fields(Config)
+        if is_cfg_field_name(field.name)
+    ]
+
+
+def set_config_key(key: str, _value: str, config_path: Path = CONFIG_PATH) -> None:
     for field in dataclasses.fields(Config):
         if is_cfg_field_name(field.name) and field.name == key:
-            if field.type is bool:
-                value = str_to_bool(_value)
-            else:
-                type_callable = name_to_type[field.type]
-                value = type_callable(_value)
-            config = Config.get(CONFIG_PATH)
+            type_callable = name_to_type[field.type]
+            value = type_callable(_value)
+            config = Config.get(config_path)
             setattr(config, key, value)
             config.save()
-            return config
+            return
 
-    raise ValueError(f"Unknown key: {key}")
+    raise KeyError(f"Unknown key: {key}")
