@@ -65,7 +65,7 @@ def set(
     ),
 ):
     """
-    Set a specific parameter value.\n
+    Set a specific configuration KEY to a VALUE.\n
     (boolean example)      iqba config set cache false\n
     (string example)       iqba config set ignore-ext js,css,ico\n
     (integer example)      iqba config set max-cached 30\n

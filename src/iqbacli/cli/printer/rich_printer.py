@@ -32,4 +32,5 @@ class RichPrinter(Printer):
                 continue
             table.add_row(k, v)
 
+        self.console.print()
         self.console.print(table, highlight=self.color)
