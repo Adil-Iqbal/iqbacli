@@ -15,7 +15,7 @@ def _print_entire_config(json: bool, no_color: bool) -> None:
 
 @app.callback(invoke_without_command=True)
 def get(
-    key: Optional[str] = typer.Option(
+    key: Optional[str] = typer.Argument(
         default=None,
         show_default=False,
         help="Get value for a specific configuration key.",
@@ -36,10 +36,11 @@ def get(
     ),
 ):
     """
-    Get entire configuration. / Get a specific parameter.\n
-    (entire config)  iqba config get\n
-    (config as json) iqba config get --json\n
-    (just a key)     iqba config get --key flat\n
+    Get entire configuration. / Get a specific value.\n
+    (entire config)      iqba config get\n
+    (just a key)         iqba config get flat\n
+    (config as json)     iqba config get --json\n
+    (json without color) iqba config get --json --no-color\n
     """
     if key is None:
         _print_entire_config(json, no_color)
