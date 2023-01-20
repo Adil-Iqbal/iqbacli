@@ -80,7 +80,7 @@ def set(
     try:
         config.set_config_key(key, value)
         printer = printer_factory(json, no_color)
-        printer.print_config(highlight_keys=(key))
+        printer.print_config(highlight_keys=[key])
 
     except KeyError:
         _handle_key_error(key)
