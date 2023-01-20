@@ -39,7 +39,7 @@ def get(
     Get entire configuration. / Get a specific parameter.\n
     (entire config)  iqba config get\n
     (config as json) iqba config get --json\n
-    (just a param)   iqba config get --key flat\n
+    (just a key)     iqba config get --key flat\n
     """
     if key is None:
         _print_entire_config(json, no_color)
