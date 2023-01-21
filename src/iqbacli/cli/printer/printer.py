@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ...paths import CONFIG_PATH
 from pathlib import Path
 from rich.console import Console
@@ -12,6 +14,7 @@ class Printer(ABC):
 
     @abstractmethod
     def print_config(
+        self: Printer,
         config_path: Path = CONFIG_PATH,
         highlight_keys: Optional[list[str]] = None,
     ) -> None:
