@@ -22,7 +22,7 @@ class RichPrinter(Printer):
         """Print representation of application configuration file."""
         config_dict = config.get_config_dict(config_path)
         table = Table(title="User Configuration")
-        table.add_column("Name")
+        table.add_column("Key")
         table.add_column("Value")
 
         for key, value in config_dict.items():
