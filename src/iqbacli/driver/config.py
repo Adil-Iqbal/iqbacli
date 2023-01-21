@@ -5,8 +5,8 @@ from pathlib import Path
 
 from iqbacli.logging import create_logger
 from iqbacli.params import builtins
-from ..paths import CONFIG_PATH
-from ..data.config import Config, is_cfg_field_name
+from iqbacli.paths import CONFIG_PATH
+from iqbacli.data.config import Config, is_cfg_field_name
 
 logger = create_logger(__file__)
 str_true: set[str] = {"ok", "1", "yes", "true"}
@@ -67,3 +67,9 @@ def reset_config_key(_key: str, config_path: Path = CONFIG_PATH) -> None:
         set_config_key(key=_key, _value=str(default_value), config_path=config_path)
     except AttributeError:
         raise KeyError(f"Unknown key: {_key}")
+
+
+def reset_config(config_path: Path = CONFIG_PATH) -> None:
+    logger.info(f"resetting entire config at path: {str(config_path.absolute())}")
+    config_path.unlink(missing_ok=True)
+    Config.create_new(config_path=config_path)
