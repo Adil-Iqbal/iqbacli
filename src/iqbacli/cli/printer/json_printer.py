@@ -17,7 +17,7 @@ class JsonPrinter(Printer):
     def print_config(
         self: JsonPrinter,
         config_path: Path = CONFIG_PATH,
-        highlight_keys: Optional[tuple[str, ...]] = None,
+        highlight_keys: Optional[list[str]] = None,
     ) -> None:
         """Print representation of application configuration file."""
         config_dict = config.get_config_dict(config_path)

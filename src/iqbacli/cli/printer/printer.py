@@ -13,6 +13,6 @@ class Printer(ABC):
     @abstractmethod
     def print_config(
         config_path: Path = CONFIG_PATH,
-        highlight_keys: Optional[tuple[str, ...]] = None,
+        highlight_keys: Optional[list[str]] = None,
     ) -> None:
         """Print representation of application configuration file."""

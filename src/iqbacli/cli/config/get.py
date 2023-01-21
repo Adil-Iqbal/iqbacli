@@ -52,7 +52,7 @@ def get(
     config_dict = config.get_config_dict()
     if key not in config_dict:
         _print_entire_config(json, no_color)
-        typer.secho(f"\nUnknown key; {key}", fg="red")
+        typer.secho(f"\nUnknown key: {key}", fg="red")
         raise typer.Abort()
 
     typer.echo(config_dict[key])

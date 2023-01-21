@@ -1,20 +1,18 @@
 import humps
-from rich.console import Console
-from rich.table import Table
+import typer
+from typing import NoReturn, Optional
 from ...driver import config
-from ...paths import CONFIG_PATH
-from pathlib import Path
 
 
-def print_config_table(
-    config_path: Path = CONFIG_PATH, console: Console = Console()
-) -> None:
-    config_dict = config.get_config_dict(config_path)
-    table = Table(title="User Configuration")
-    table.add_column("Name")
-    table.add_column("Value")
-
-    for key, value in config_dict.items():
-        table.add_row(humps.kebabize(key), str(value))
-
-    console.print(table)
+def _handle_key_error(key: str, default_keys: Optional[list[str]] = None) -> NoReturn:
+    if default_keys is None:
+        default_keys = [humps.kebabize(k) for k in config.get_valid_config_keys()]
+    typer.secho(
+        f"""
+Unknown key: {key}
+            
+Key must be one of these: {', '.join(default_keys)}
+        """,
+        fg="red",
+    )
+    raise typer.Abort()

@@ -1,31 +1,15 @@
 from __future__ import annotations
 
-import json
+
 from typing import NoReturn
-import rich
 import humps
 import typer
-
-from iqbacli.cli.config.util import print_config_table
-from ...paths import CONFIG_PATH
+from .util import _handle_key_error
 from ...driver import config
 from ..printer import printer_factory
 
 
 app = typer.Typer(short_help="Set configuration parameter.")
-
-
-def _handle_key_error(key: str) -> NoReturn:
-    valid_field_names = [humps.kebabize(k) for k in config.get_valid_config_keys()]
-    typer.secho(
-        f"""
-Unknown key: {key}
-            
-Key must be one of these: {', '.join(valid_field_names)}
-        """,
-        fg="red",
-    )
-    raise typer.Abort()
 
 
 def _handle_value_error(key: str, value: str) -> NoReturn:

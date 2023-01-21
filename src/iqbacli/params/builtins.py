@@ -7,9 +7,9 @@ FLAT = False
 REGEX = False
 AGAIN = False
 
-ONLY_EXT = ".*"
-ONLY_FILENAME = ".*"
-ONLY_DIRNAME = ".*"
+ONLY_EXT = ""
+ONLY_FILENAME = ""
+ONLY_DIRNAME = ""
 
 IGNORE_EXT = ""
 IGNORE_FILENAME = ""
