@@ -4,7 +4,7 @@ import humps
 from ...paths import CONFIG_PATH
 from ...driver import config
 from pathlib import Path
-from typing import Optional, Type
+from typing import Optional
 from rich.console import Console
 from rich.table import Table
 from .printer import Printer

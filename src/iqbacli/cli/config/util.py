@@ -10,7 +10,7 @@ def _handle_key_error(key: str, default_keys: Optional[list[str]] = None) -> NoR
     typer.secho(
         f"""
 Unknown key: {key}
-            
+
 Key must be one of these: {', '.join(default_keys)}
         """,
         fg="red",

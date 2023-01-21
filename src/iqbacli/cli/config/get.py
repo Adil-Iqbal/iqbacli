@@ -1,4 +1,4 @@
-from typing import NoReturn, Optional
+from typing import Optional
 import humps
 import typer
 from ...driver import config
