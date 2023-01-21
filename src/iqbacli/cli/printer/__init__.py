@@ -12,5 +12,4 @@ _printer_dict: dict[tuple[bool], Type[Printer]] = {
 
 
 def printer_factory(_json: bool = False, no_color: bool = True) -> Printer:
-    console = Console()
-    return _printer_dict[(_json,)](console=console, color=not no_color)
+    return _printer_dict[(_json,)](console=Console(), color=not no_color)

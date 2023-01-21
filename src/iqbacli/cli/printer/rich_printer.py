@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import humps
-from ...paths import CONFIG_PATH
-from ...driver import config
+from iqbacli.paths import CONFIG_PATH
+from iqbacli.driver.config import get_config_dict
 from pathlib import Path
 from typing import Optional
 from rich.console import Console
@@ -20,7 +20,7 @@ class RichPrinter(Printer):
         highlight_keys: Optional[list[str]] = None,
     ) -> None:
         """Print representation of application configuration file."""
-        config_dict = config.get_config_dict(config_path)
+        config_dict = get_config_dict(config_path)
         table = Table(title="User Configuration")
         table.add_column("Key")
         table.add_column("Value")
