@@ -9,6 +9,7 @@ from iqbacli.paths import CONFIG_PATH
 from iqbacli.data.config import Config, is_cfg_field_name
 
 logger = create_logger(__file__)
+
 str_true: set[str] = {"ok", "1", "yes", "true"}
 
 
@@ -51,6 +52,7 @@ def set_config_key(key: str, _value: str, config_path: Path = CONFIG_PATH) -> No
             type_callable = name_to_type[field.type]
             value = type_callable(_value)
             config = Config.get(config_path)
+            print(f"setting config {key=} to {value=}")
             logger.info(f"setting config {key=} to {value=}")
             setattr(config, key, value)
             config.save()
