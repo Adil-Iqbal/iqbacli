@@ -52,7 +52,6 @@ def set_config_key(key: str, _value: str, config_path: Path = CONFIG_PATH) -> No
             type_callable = name_to_type[field.type]
             value = type_callable(_value)
             config = Config.get(config_path)
-            print(f"setting config {key=} to {value=}")
             logger.info(f"setting config {key=} to {value=}")
             setattr(config, key, value)
             config.save()

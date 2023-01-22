@@ -1,3 +1,4 @@
+from typing import Optional
 import typer
 import humps
 from iqbacli.cli.printer import printer_factory
@@ -10,7 +11,7 @@ app = typer.Typer(short_help="Reset configuration or reset specific param.")
 
 @app.callback(invoke_without_command=True)
 def reset(
-    key: str = typer.Argument(
+    key: Optional[str] = typer.Argument(
         default=None, show_default=False, help="Reset a specific key to default value."
     ),
     json: bool = typer.Option(

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from iqbacli.cli.context.ca_dto import ContextActionDTO
+
 from ...paths import CONFIG_PATH
 from pathlib import Path
 from rich.console import Console
@@ -19,3 +21,7 @@ class Printer(ABC):
         highlight_keys: Optional[list[str]] = None,
     ) -> None:
         """Print representation of application configuration file."""
+
+    @abstractmethod
+    def print_context_actions(self: Printer, context_actions: ContextActionDTO):
+        """Print representation of context actions after command."""

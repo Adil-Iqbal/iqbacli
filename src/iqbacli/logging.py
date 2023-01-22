@@ -1,9 +1,9 @@
-import os
 import sys
 import datetime
 from typing import Final
 from pathlib import Path
-from .paths import BASE_DIR, LOG_DIR
+from iqbacli.paths import BASE_DIR, LOG_DIR
+from iqbacli.params.env import is_env, get_env
 import logging
 from logging import FileHandler, Logger, NullHandler, StreamHandler, Formatter
 
@@ -28,13 +28,13 @@ def _get_relative_path(filepathstr: str) -> str:
 
 
 def _resolve_log_level():
-    if (env := os.getenv("IQBA_LOG_LEVEL")) is not None:
+    if (env := get_env("LOG_LEVEL")) is not None:
         return logging._nameToLevel[env.upper()]
     return logging.INFO
 
 
 def _resolve_log_streaming(logger: Logger) -> None:
-    if os.getenv("IQBA_STREAM_LOGS") == "1":
+    if is_env("STREAM_LOGS", "1"):
         stream_handler = StreamHandler()
         stream_handler.setFormatter(_DEFAULT_LOG_FORMATTER)
         logger.addHandler(stream_handler)
@@ -59,7 +59,7 @@ def _create_prod_logger(prod_logger: Logger) -> Logger:
 def create_logger(filepath: str) -> Logger:
     relpath = _get_relative_path(filepath)
     logger = logging.getLogger(relpath)
-    if os.getenv("IQBA_ENV") == "dev":
+    if is_env("ENV", "dev"):
         return _create_dev_logger(logger)
     return _create_prod_logger(logger)
 
