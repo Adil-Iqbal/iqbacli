@@ -14,13 +14,16 @@ str_true: set[str] = {"ok", "1", "yes", "true"}
 
 
 def str_to_bool(string: str) -> bool:
-    if string.lower() in str_true:
+    if string.lower() in {"true", "on", "1"}:
         return True
-    if string.isdigit() and int(string) != 0:
-        return True
-    if string.startswith(("t", "T", "y", "Y")):
-        return True
-    return False
+
+    if string.lower() in {"false", "off", "0"}:
+        return False
+
+    if string.isdigit():
+        return bool(int(string))
+
+    raise ValueError(f"Boolean value not recognized {string}")
 
 
 name_to_type: dict[Any, Any] = {
@@ -36,6 +39,10 @@ def get_path(config_path: Path = CONFIG_PATH) -> str:
 
 def get_config_dict(config_path: Path = CONFIG_PATH) -> Any:
     return json.loads(config_path.read_text())
+
+
+def get_config(config_path: Path = CONFIG_PATH) -> Config:
+    return Config.get(config_path=config_path)
 
 
 def get_valid_config_keys() -> list[str]:

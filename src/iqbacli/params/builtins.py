@@ -6,6 +6,7 @@ CACHE = True
 FLAT = False
 REGEX = False
 AGAIN = False
+SUGGESTIONS = False
 
 ONLY_EXT = ""
 ONLY_FILENAME = ""

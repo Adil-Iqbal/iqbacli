@@ -4,8 +4,10 @@ import json
 import dataclasses
 from typing import Any
 from pathlib import Path
-from ..params import builtins
-from ..logging import create_logger
+from iqbacli.cli import suggestions
+
+from iqbacli.params import builtins
+from iqbacli.logging import create_logger
 
 logger = create_logger(__file__)
 _OMITTED_FNAME_PREFIX = ("_", "config_path")
@@ -21,6 +23,7 @@ class Config:
     cache: bool
     flat: bool
     regex: bool
+    suggestions: bool
     only_ext: str
     only_filename: str
     only_dirname: str
@@ -46,7 +49,7 @@ class Config:
         logger.info(f"getting config json file at {config_path=}")
         try:
             return Config.get_from_file(config_path)
-        except (TypeError, FileNotFoundError):
+        except (TypeError, OSError):
             return Config.create_new(config_path)
 
     @staticmethod
@@ -65,6 +68,7 @@ class Config:
             cache=builtins.CACHE,
             flat=builtins.FLAT,
             regex=builtins.REGEX,
+            suggestions=builtins.SUGGESTIONS,
             only_ext=builtins.ONLY_EXT,
             only_filename=builtins.ONLY_FILENAME,
             only_dirname=builtins.ONLY_DIRNAME,

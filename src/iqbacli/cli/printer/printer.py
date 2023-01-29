@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from iqbacli.cli.context.ca_dto import ContextActionDTO
+from iqbacli.cli.suggestions.suggestions import Suggestions
 
-from ...paths import CONFIG_PATH
+from iqbacli.paths import CONFIG_PATH
 from pathlib import Path
 from rich.console import Console
 from typing import Optional
@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 
 
 class Printer(ABC):
-    def __init__(self, console: Console, color: bool):
+    def __init__(self: Printer, console: Console, color: bool):
         self.console = console
         self.color = color
 
@@ -23,5 +23,19 @@ class Printer(ABC):
         """Print representation of application configuration file."""
 
     @abstractmethod
-    def print_context_actions(self: Printer, context_actions: ContextActionDTO):
-        """Print representation of context actions after command."""
+    def success_message(self: Printer, message: str) -> None:
+        """Print representation of success message."""
+
+    def print_suggestions(self: Printer, suggests: Suggestions) -> None:
+        """Print representation of suggestions."""
+        if suggests.no_suggest:
+            return
+        if len(suggests) == 0:
+            return
+        suggests._pre_print()
+        return self._print_suggestions_impl(suggests=suggests)
+
+    @abstractmethod
+    def _print_suggestions_impl(self: Printer, suggests: Suggestions) -> None:
+        """Print representation of suggestions. (PRIVATE)"""
+        ...
