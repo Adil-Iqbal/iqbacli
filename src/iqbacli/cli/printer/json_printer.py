@@ -27,7 +27,7 @@ class MessageType(Enum):
 @dataclasses.dataclass
 class Message:
     message: str
-    type: MessageType
+    type: str
 
     def to_dict(self: Message) -> dict[str, Any]:
         return self.__dict__
@@ -57,7 +57,7 @@ class JsonPrinter(Printer):
         self.data[key].append(entity.to_dict())
 
     def _message(self: JsonPrinter, message: str, type: MessageType) -> None:
-        self._register_entity("messages", Message(message=message, type=type))
+        self._register_entity("messages", Message(message=message, type=type.value))
 
     def success_message(self: JsonPrinter, message: str) -> None:
         self._message(message=message, type=MessageType.SUCCESS)
