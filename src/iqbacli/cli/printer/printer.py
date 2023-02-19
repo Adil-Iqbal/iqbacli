@@ -23,8 +23,20 @@ class Printer(ABC):
         """Print representation of application configuration file."""
 
     @abstractmethod
-    def success_message(self: Printer, message: str) -> None:
+    def success(self: Printer, message: str) -> None:
         """Print representation of success message."""
+
+    @abstractmethod
+    def info(self: Printer, message: str) -> None:
+        """Print representation of info message."""
+
+    @abstractmethod
+    def warn(self: Printer, message: str) -> None:
+        """Print representation of warn message."""
+
+    @abstractmethod
+    def error(self: Printer, message: str, argv: Optional[str] = None) -> None:
+        """Print representation of error message."""
 
     def print_suggestions(self: Printer, suggests: Suggestions) -> None:
         """Print representation of suggestions."""

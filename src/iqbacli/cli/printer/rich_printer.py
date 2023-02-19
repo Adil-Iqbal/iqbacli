@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from rich.panel import Panel
 import humps
 from iqbacli.paths import CONFIG_PATH
 from iqbacli.driver.config import get_config_dict
@@ -8,11 +9,27 @@ from typing import Optional
 from rich.console import Console
 from rich.table import Table
 from iqbacli.cli.printer.printer import Printer
+from iqbacli.cli.printer.message import Message, MessageType
 
 
 class RichPrinter(Printer):
     def __init__(self, console: Console, color: bool):
         super().__init__(console=console, color=color)
+
+    def _message(self: RichPrinter):
+        panel = Panel()
+
+    def success(self: Printer, message: str) -> None:
+        return super().success(message)
+
+    def info(self: Printer, message: str) -> None:
+        return super().info(message)
+
+    def warn(self: Printer, message: str) -> None:
+        return super().warn(message)
+
+    def error(self: Printer, message: str, argv: Optional[str] = None) -> None:
+        return super().error(message, argv)
 
     def print_config(
         self: RichPrinter,
