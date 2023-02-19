@@ -1,6 +1,5 @@
 from __future__ import annotations
 from collections import defaultdict
-from enum import Enum
 
 from iqbacli.cli.suggestions.suggestions import Suggestions
 import dataclasses
@@ -13,24 +12,12 @@ from rich import print_json
 from iqbacli.cli.printer.printer import Printer
 from typing import Protocol, DefaultDict
 import atexit
+from iqbacli.cli.printer.message import Message, MessageType
 
 
 class JsonPrintable(Protocol):
     def to_dict(self: JsonPrintable) -> dict[str, Any]:
         ...
-
-
-class MessageType(Enum):
-    SUCCESS = "success"
-
-
-@dataclasses.dataclass
-class Message:
-    message: str
-    type: str
-
-    def to_dict(self: Message) -> dict[str, Any]:
-        return self.__dict__
 
 
 @dataclasses.dataclass
@@ -57,10 +44,19 @@ class JsonPrinter(Printer):
         self.data[key].append(entity.to_dict())
 
     def _message(self: JsonPrinter, message: str, type: MessageType) -> None:
-        self._register_entity("messages", Message(message=message, type=type.value))
+        self._register_entity("messages", Message(message=message, type=type))
 
-    def success_message(self: JsonPrinter, message: str) -> None:
+    def success(self: JsonPrinter, message: str) -> None:
         self._message(message=message, type=MessageType.SUCCESS)
+
+    def info(self: JsonPrinter, message: str) -> None:
+        self._message(message=message, type=MessageType.INFO)
+
+    def warn(self: JsonPrinter, message: str) -> None:
+        self._message(message=message, type=MessageType.WARN)
+
+    def error(self: JsonPrinter, message: str, _: Optional[str] = None) -> None:
+        return self._message(message=message, type=MessageType.ERROR)
 
     def print_config(
         self: JsonPrinter,
