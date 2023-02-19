@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-from typing import NoReturn
+from typing import NoReturn, Optional
 import humps
 import typer
 
@@ -50,8 +50,8 @@ def set(
         help="Remove color.",
         rich_help_panel="Formatting",
     ),
-    no_suggest: bool = typer.Option(
-        False,
+    no_suggest: Optional[bool] = typer.Option(
+        None,
         "--no-suggest/",
         show_default=False,
         help="Remove suggestions.",
@@ -77,7 +77,7 @@ def set(
         _handle_value_error(_key, value)
 
     printer = printer_factory(json, no_color)
-    printer.success_message("Changes will be applied to next command.")
+    printer.success("Changes will be applied to next command.")
 
     _key = humps.kebabize(_key)
     suggests = Suggestions(no_suggest=no_suggest)

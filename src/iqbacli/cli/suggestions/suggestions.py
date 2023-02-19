@@ -26,9 +26,7 @@ def _resolve_no_suggest_param(
         return not get_config(config_path=config_path).suggestions
 
     except OSError:
-        logger.exception(
-            "Handled error accessing config. Investigate data.config file."
-        )
+        logger.exception("Could not access config file. Investigate data.config file.")
         return not builtins.SUGGESTIONS
 
 
