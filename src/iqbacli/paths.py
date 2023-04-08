@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from logging import Logger
-from platformdirs import PlatformDirs
 from pathlib import Path
 from typing import Any, Final, Optional
+
+from platformdirs import PlatformDirs
+
 from iqbacli.params.env import get_env
 
 # Internal Paths

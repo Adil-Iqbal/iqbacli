@@ -1,9 +1,12 @@
 import functools
 import random
+from pathlib import Path
+
 import pytest
+
 from iqbacli.data import sql
 from iqbacli.data.query import Query
-from pathlib import Path
+
 from .util import reset_db
 
 

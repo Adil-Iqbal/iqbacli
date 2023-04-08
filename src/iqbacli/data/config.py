@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-import json
 import dataclasses
-from typing import Any
+import json
 from pathlib import Path
-from iqbacli.cli import suggestions
+from typing import Any
 
-from iqbacli.params import builtins
+from iqbacli.cli import suggestions
 from iqbacli.logging import create_logger
+from iqbacli.params import builtins
 
 logger = create_logger(__file__)
 _OMITTED_FNAME_PREFIX = ("_", "config_path")

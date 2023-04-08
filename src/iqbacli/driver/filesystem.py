@@ -1,5 +1,5 @@
-from ..paths import USER_DATA_DIR
 from ..logging import create_logger
+from ..paths import USER_DATA_DIR
 
 logger = create_logger(__file__)
 

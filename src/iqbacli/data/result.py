@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from . import sql
 import dataclasses
 import functools
 from pathlib import Path
-from typing import Optional, Any
-from .datatypes import SQLiteReprResult
+from typing import Any, Optional
+
 from ..logging import create_logger
+from . import sql
+from .datatypes import SQLiteReprResult
 
 logger = create_logger(__file__)
 

@@ -1,6 +1,8 @@
-from typing import Optional
-import typer
 from pathlib import Path
+from typing import Optional
+
+import typer
+
 from ..params import builtins
 
 app = typer.Typer(

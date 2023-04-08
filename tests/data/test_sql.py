@@ -1,6 +1,8 @@
-from iqbacli.data import sql
-from .util import monkeypatch_sqlite3, FakeSQLite3Connection, delete_db
 import pytest
+
+from iqbacli.data import sql
+
+from .util import FakeSQLite3Connection, delete_db, monkeypatch_sqlite3
 
 
 @pytest.fixture

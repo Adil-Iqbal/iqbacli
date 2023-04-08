@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import sqlite3
-from typing import Any, Generator, Final
 from contextlib import contextmanager
+from typing import Any, Final, Generator
+
 from ..logging import create_logger
-from ..paths import SQL_DIR, DB_PATH
+from ..paths import DB_PATH, SQL_DIR
 
 logger = create_logger(__file__)
 

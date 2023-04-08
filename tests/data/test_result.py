@@ -1,13 +1,16 @@
 """
 TODO: START RESULT TESTING! PEACE!!!!
 """
-from pathlib import Path
-import random
-import pytest
 import functools
+import random
+from pathlib import Path
+
+import pytest
+
+from iqbacli.data import sql
 from iqbacli.data.datatypes import SQLiteReprResult
 from iqbacli.data.result import Result
-from iqbacli.data import sql
+
 from .util import reset_db
 
 

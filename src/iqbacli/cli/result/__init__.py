@@ -1,9 +1,6 @@
 import typer
-from . import list
-from . import show
-from . import get
-from . import delete
-from . import last
+
+from . import delete, get, last, list, show
 
 app = typer.Typer(short_help="Review and operate on obtained search results.")
 

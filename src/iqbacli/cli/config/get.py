@@ -1,9 +1,11 @@
 from typing import Optional
+
 import humps
 import typer
-from ...driver import config
 
 from iqbacli.cli.printer import printer_factory
+
+from ...driver import config
 
 app = typer.Typer(short_help="Get configuration settings.")
 

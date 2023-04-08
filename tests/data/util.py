@@ -1,8 +1,9 @@
-import sqlite3
 import functools
-from typing import Any, Optional
-from iqbacli.data import sql
+import sqlite3
 from pathlib import Path
+from typing import Any, Optional
+
+from iqbacli.data import sql
 
 sql.DB_PATH = Path(__file__).parent.resolve() / "test.sqlite3"
 sql.SQL_DIR = Path(__file__).parent.resolve() / "sql"

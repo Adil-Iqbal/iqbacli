@@ -1,13 +1,14 @@
+import logging
 import os
 import sys
-from iqbacli.paths import BASE_DIR
-import logging
+
 from iqbacli.logging import (
-    _create_prod_logger,
     _create_dev_logger,
-    log_sys_argv,
+    _create_prod_logger,
     create_logger,
+    log_sys_argv,
 )
+from iqbacli.paths import BASE_DIR
 
 
 def test_log_sys_argv(monkeypatch, caplog):

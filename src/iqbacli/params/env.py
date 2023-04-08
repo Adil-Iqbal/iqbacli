@@ -1,7 +1,8 @@
 import os
-import dotenv
 from logging import Logger
 from typing import Optional, Sequence
+
+import dotenv
 
 dotenv.load_dotenv()
 

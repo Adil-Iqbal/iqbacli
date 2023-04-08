@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from iqbacli.cli.suggestions.suggestions import Suggestions
-
-from iqbacli.paths import CONFIG_PATH
-from pathlib import Path
-from rich.console import Console
-from typing import Optional
 from abc import ABC, abstractmethod
+from pathlib import Path
+from typing import Optional
+
+from rich.console import Console
+
+from iqbacli.cli.suggestions.suggestions import Suggestions
+from iqbacli.paths import CONFIG_PATH
 
 
 class Printer(ABC):

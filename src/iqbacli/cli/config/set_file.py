@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import typer
 
 app = typer.Typer(short_help="Set configuration using JSON file.")

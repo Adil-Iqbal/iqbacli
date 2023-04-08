@@ -1,8 +1,7 @@
 from iqbacli import cli, driver
-from iqbacli.paths import log_paths
 from iqbacli.logging import create_logger, log_sys_argv
 from iqbacli.params.env import log_env_vars
-
+from iqbacli.paths import log_paths
 
 logger = create_logger(__file__)
 

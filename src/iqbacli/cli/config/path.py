@@ -1,4 +1,5 @@
 import typer
+
 from iqbacli.driver import config
 
 app = typer.Typer(short_help="Display path to configuration file.")

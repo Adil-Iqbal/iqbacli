@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from pathlib import Path
 from typing import Iterator, Optional
 
@@ -6,9 +7,8 @@ from iqbacli.cli.suggestions.suggestion import Suggestion
 from iqbacli.driver.config import get_config
 from iqbacli.logging import create_logger
 from iqbacli.params import builtins
-from iqbacli.paths import CONFIG_PATH
 from iqbacli.params.env import get_env, is_env
-
+from iqbacli.paths import CONFIG_PATH
 
 logger = create_logger(__file__)
 

@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import Union, TypedDict
 
+from typing import TypedDict, Union
 
 SQLiteReprQuery = tuple[
     int, str, str, str, str, bool, bool, bool, str, str, str, str, str, str

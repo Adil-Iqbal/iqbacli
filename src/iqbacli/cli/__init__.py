@@ -1,9 +1,6 @@
 import typer
-from . import search
-from . import history
-from . import config
-from . import cache
-from . import result
+
+from . import cache, config, history, result, search
 
 app = typer.Typer()
 

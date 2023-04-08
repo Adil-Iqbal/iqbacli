@@ -1,9 +1,6 @@
 import typer
-from . import get
-from . import set
-from . import reset
-from . import set_file
-from . import path
+
+from . import get, path, reset, set, set_file
 
 app = typer.Typer(short_help="Review and change configuration.")
 

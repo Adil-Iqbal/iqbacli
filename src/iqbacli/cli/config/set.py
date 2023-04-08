@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-
 from typing import NoReturn, Optional
+
 import humps
 import typer
 
-
-from iqbacli.cli.suggestions.suggestions import Suggestions
 from iqbacli.cli.config.util import _handle_key_error
-from iqbacli.driver import config
 from iqbacli.cli.printer import printer_factory
-
+from iqbacli.cli.suggestions.suggestions import Suggestions
+from iqbacli.driver import config
 
 app = typer.Typer(short_help="Set configuration parameter.")
 

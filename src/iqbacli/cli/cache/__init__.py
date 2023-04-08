@@ -1,6 +1,6 @@
 import typer
-from . import size
-from . import clear
+
+from . import clear, size
 
 app = typer.Typer(short_help="Review and manage file cache.")
 

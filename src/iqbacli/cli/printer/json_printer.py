@@ -1,18 +1,19 @@
 from __future__ import annotations
-from collections import defaultdict
 
-from iqbacli.cli.suggestions.suggestions import Suggestions
-import dataclasses
-from iqbacli.paths import CONFIG_PATH
-from iqbacli.driver import config
-from pathlib import Path
-from typing import Any, Optional
-from rich.console import Console
-from rich import print_json
-from iqbacli.cli.printer.printer import Printer
-from typing import Protocol, DefaultDict
 import atexit
+import dataclasses
+from collections import defaultdict
+from pathlib import Path
+from typing import Any, DefaultDict, Optional, Protocol
+
+from rich import print_json
+from rich.console import Console
+
 from iqbacli.cli.printer.message import Message, MessageType
+from iqbacli.cli.printer.printer import Printer
+from iqbacli.cli.suggestions.suggestions import Suggestions
+from iqbacli.driver import config
+from iqbacli.paths import CONFIG_PATH
 
 
 class JsonPrintable(Protocol):

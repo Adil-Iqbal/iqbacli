@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-
-from .datatypes import SQLiteReprQuery
-
-
-from typing import Any, Optional
-from . import sql
 import dataclasses
 import functools
 from pathlib import Path
-from .result import Result
+from typing import Any, Optional
+
 from ..logging import create_logger
+from . import sql
+from .datatypes import SQLiteReprQuery
+from .result import Result
 
 logger = create_logger(__file__)
 

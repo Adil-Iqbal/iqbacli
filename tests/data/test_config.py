@@ -1,5 +1,7 @@
-import pytest
 from pathlib import Path
+
+import pytest
+
 from iqbacli.data.config import Config
 from iqbacli.params import builtins
 

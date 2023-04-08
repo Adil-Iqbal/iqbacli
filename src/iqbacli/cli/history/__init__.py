@@ -1,10 +1,6 @@
 import typer
-from . import list
-from . import undo
-from . import clear
-from . import get
-from . import delete
-from . import last
+
+from . import clear, delete, get, last, list, undo
 
 app = typer.Typer(short_help="Review and operate on previous search queries.")
 

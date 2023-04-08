@@ -1,15 +1,17 @@
 from __future__ import annotations
 
-from rich.panel import Panel
-import humps
-from iqbacli.paths import CONFIG_PATH
-from iqbacli.driver.config import get_config_dict
 from pathlib import Path
 from typing import Optional
+
+import humps
 from rich.console import Console
+from rich.panel import Panel
 from rich.table import Table
-from iqbacli.cli.printer.printer import Printer
+
 from iqbacli.cli.printer.message import Message, MessageType
+from iqbacli.cli.printer.printer import Printer
+from iqbacli.driver.config import get_config_dict
+from iqbacli.paths import CONFIG_PATH
 
 
 class RichPrinter(Printer):
