@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import functools
 import sqlite3
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 from iqbacli.data import sql
 

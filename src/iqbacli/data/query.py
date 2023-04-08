@@ -3,7 +3,8 @@ from __future__ import annotations
 import dataclasses
 import functools
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
+from typing import Optional
 
 from ..logging import create_logger
 from . import sql

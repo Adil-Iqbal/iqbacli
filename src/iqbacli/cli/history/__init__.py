@@ -1,6 +1,13 @@
+from __future__ import annotations
+
 import typer
 
-from . import clear, delete, get, last, list, undo
+from . import clear
+from . import delete
+from . import get
+from . import last
+from . import list
+from . import undo
 
 app = typer.Typer(short_help="Review and operate on previous search queries.")
 

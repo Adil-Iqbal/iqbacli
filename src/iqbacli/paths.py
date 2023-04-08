@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from logging import Logger
 from pathlib import Path
-from typing import Any, Final, Optional
+from typing import Any
+from typing import Final
+from typing import Optional
 
 from platformdirs import PlatformDirs
 

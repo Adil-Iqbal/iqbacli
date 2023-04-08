@@ -1,5 +1,9 @@
-from iqbacli import cli, driver
-from iqbacli.logging import create_logger, log_sys_argv
+from __future__ import annotations
+
+from iqbacli import cli
+from iqbacli import driver
+from iqbacli.logging import create_logger
+from iqbacli.logging import log_sys_argv
 from iqbacli.params.env import log_env_vars
 from iqbacli.paths import log_paths
 

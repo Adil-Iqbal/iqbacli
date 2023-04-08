@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..logging import create_logger
 from ..paths import USER_DATA_DIR
 

@@ -4,12 +4,16 @@ import atexit
 import dataclasses
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, DefaultDict, Optional, Protocol
+from typing import Any
+from typing import DefaultDict
+from typing import Optional
+from typing import Protocol
 
 from rich import print_json
 from rich.console import Console
 
-from iqbacli.cli.printer.message import Message, MessageType
+from iqbacli.cli.printer.message import Message
+from iqbacli.cli.printer.message import MessageType
 from iqbacli.cli.printer.printer import Printer
 from iqbacli.cli.suggestions.suggestions import Suggestions
 from iqbacli.driver import config

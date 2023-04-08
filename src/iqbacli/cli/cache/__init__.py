@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import typer
 
-from . import clear, size
+from . import clear
+from . import size
 
 app = typer.Typer(short_help="Review and manage file cache.")
 

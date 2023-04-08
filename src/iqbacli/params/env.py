@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import os
 from logging import Logger
-from typing import Optional, Sequence
+from typing import Optional
+from typing import Sequence
 
 import dotenv
 

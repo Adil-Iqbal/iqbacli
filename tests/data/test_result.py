@@ -1,6 +1,8 @@
 """
 TODO: START RESULT TESTING! PEACE!!!!
 """
+from __future__ import annotations
+
 import functools
 import random
 from pathlib import Path

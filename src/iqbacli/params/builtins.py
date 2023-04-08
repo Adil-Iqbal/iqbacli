@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 OUTPUT_DIR = None
 PARAMS = None
 ID = None

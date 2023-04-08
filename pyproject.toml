@@ -21,3 +21,10 @@ warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 no_implicit_reexport = true
+
+[tool.isort]
+py_version=39
+src_paths = ["src", "tests"]
+profile = "black"
+force_single_line = true
+add_imports = ["from __future__ import annotations"]

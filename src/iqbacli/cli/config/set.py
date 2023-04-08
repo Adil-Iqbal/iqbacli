@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import NoReturn, Optional
+from typing import NoReturn
+from typing import Optional
 
 import humps
 import typer

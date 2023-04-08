@@ -1,6 +1,12 @@
+from __future__ import annotations
+
 import typer
 
-from . import delete, get, last, list, show
+from . import delete
+from . import get
+from . import last
+from . import list
+from . import show
 
 app = typer.Typer(short_help="Review and operate on obtained search results.")
 

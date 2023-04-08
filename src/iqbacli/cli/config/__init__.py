@@ -1,6 +1,12 @@
+from __future__ import annotations
+
 import typer
 
-from . import get, path, reset, set, set_file
+from . import get
+from . import path
+from . import reset
+from . import set
+from . import set_file
 
 app = typer.Typer(short_help="Review and change configuration.")
 

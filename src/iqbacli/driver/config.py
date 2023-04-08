@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 import dataclasses
 import json
 from pathlib import Path
 from typing import Any
 
-from iqbacli.data.config import Config, is_cfg_field_name
+from iqbacli.data.config import Config
+from iqbacli.data.config import is_cfg_field_name
 from iqbacli.logging import create_logger
 from iqbacli.params import builtins
 from iqbacli.paths import CONFIG_PATH

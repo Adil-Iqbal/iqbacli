@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import typer
 
 from iqbacli.driver import config

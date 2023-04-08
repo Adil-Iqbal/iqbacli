@@ -1,6 +1,12 @@
+from __future__ import annotations
+
 import typer
 
-from . import cache, config, history, result, search
+from . import cache
+from . import config
+from . import history
+from . import result
+from . import search
 
 app = typer.Typer()
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import typer
 
 app = typer.Typer(short_help="Get the details of a specific search query.")

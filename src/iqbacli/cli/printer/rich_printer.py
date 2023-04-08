@@ -8,7 +8,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from iqbacli.cli.printer.message import Message, MessageType
+from iqbacli.cli.printer.message import Message
+from iqbacli.cli.printer.message import MessageType
 from iqbacli.cli.printer.printer import Printer
 from iqbacli.driver.config import get_config_dict
 from iqbacli.paths import CONFIG_PATH

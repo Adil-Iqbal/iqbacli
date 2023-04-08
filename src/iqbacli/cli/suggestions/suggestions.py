@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
+from typing import Optional
 
 from iqbacli.cli.suggestions.suggestion import Suggestion
 from iqbacli.driver.config import get_config
 from iqbacli.logging import create_logger
 from iqbacli.params import builtins
-from iqbacli.params.env import get_env, is_env
+from iqbacli.params.env import get_env
+from iqbacli.params.env import is_env
 from iqbacli.paths import CONFIG_PATH
 
 logger = create_logger(__file__)

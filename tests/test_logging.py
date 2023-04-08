@@ -1,13 +1,13 @@
+from __future__ import annotations
+
 import logging
 import os
 import sys
 
-from iqbacli.logging import (
-    _create_dev_logger,
-    _create_prod_logger,
-    create_logger,
-    log_sys_argv,
-)
+from iqbacli.logging import _create_dev_logger
+from iqbacli.logging import _create_prod_logger
+from iqbacli.logging import create_logger
+from iqbacli.logging import log_sys_argv
 from iqbacli.paths import BASE_DIR
 
 

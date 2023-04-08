@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Optional
 
 import humps
@@ -5,7 +7,9 @@ import typer
 
 from iqbacli.cli.config.util import _handle_key_error
 from iqbacli.cli.printer import printer_factory
-from iqbacli.driver.config import get_valid_config_keys, reset_config, reset_config_key
+from iqbacli.driver.config import get_valid_config_keys
+from iqbacli.driver.config import reset_config
+from iqbacli.driver.config import reset_config_key
 
 app = typer.Typer(short_help="Reset configuration or reset specific param.")
 

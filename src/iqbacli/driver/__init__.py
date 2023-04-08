@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from ..data import sql
 from .filesystem import create_user_data
 
