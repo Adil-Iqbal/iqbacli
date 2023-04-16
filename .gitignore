@@ -1,6 +1,7 @@
 *.sqlite3
 *.bat
 logs
+.vscode
 
 # -----------------------------------------------------------------
 # Created by https://www.toptal.com/developers/gitignore/api/python,pycharm+all,visualstudiocode,windows,macos,linux,vim

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import humps
 import typer
 
@@ -16,7 +14,8 @@ app = typer.Typer(short_help="Reset configuration or reset specific param.")
 
 @app.callback(invoke_without_command=True)
 def reset(
-    key: Optional[str] = typer.Argument(
+    key: str
+    | None = typer.Argument(
         default=None, show_default=False, help="Reset a specific key to default value."
     ),
     json: bool = typer.Option(

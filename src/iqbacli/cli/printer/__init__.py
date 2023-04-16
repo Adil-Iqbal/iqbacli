@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from typing import Type
-
 from rich.console import Console
 
 from iqbacli.cli.printer.json_printer import JsonPrinter
 from iqbacli.cli.printer.printer import Printer
 from iqbacli.cli.printer.rich_printer import RichPrinter
 
-_printer_dict: dict[tuple[bool], Type[Printer]] = {
+__all__: list[str] = []
+
+_printer_dict: dict[tuple[bool], type[Printer]] = {
     (False,): RichPrinter,
     (True,): JsonPrinter,
 }

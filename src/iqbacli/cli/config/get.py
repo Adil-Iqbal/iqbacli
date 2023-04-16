@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import humps
 import typer
 
@@ -19,7 +17,8 @@ def _print_entire_config(json: bool, no_color: bool) -> None:
 
 @app.callback(invoke_without_command=True)
 def get(
-    key: Optional[str] = typer.Argument(
+    key: str
+    | None = typer.Argument(
         default=None,
         show_default=False,
         help="Get value for a specific configuration key.",

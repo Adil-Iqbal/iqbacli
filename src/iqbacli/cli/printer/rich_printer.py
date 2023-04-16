@@ -1,15 +1,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import humps
 from rich.console import Console
-from rich.panel import Panel
 from rich.table import Table
 
-from iqbacli.cli.printer.message import Message
-from iqbacli.cli.printer.message import MessageType
 from iqbacli.cli.printer.printer import Printer
 from iqbacli.driver.config import get_config_dict
 from iqbacli.paths import CONFIG_PATH
@@ -20,24 +16,24 @@ class RichPrinter(Printer):
         super().__init__(console=console, color=color)
 
     def _message(self: RichPrinter):
-        panel = Panel()
+        ...
 
     def success(self: Printer, message: str) -> None:
-        return super().success(message)
+        ...
 
     def info(self: Printer, message: str) -> None:
-        return super().info(message)
+        ...
 
     def warn(self: Printer, message: str) -> None:
-        return super().warn(message)
+        ...
 
-    def error(self: Printer, message: str, argv: Optional[str] = None) -> None:
-        return super().error(message, argv)
+    def error(self: Printer, message: str, argv: str | None = None) -> None:
+        ...
 
     def print_config(
         self: RichPrinter,
         config_path: Path = CONFIG_PATH,
-        highlight_keys: Optional[list[str]] = None,
+        highlight_keys: list[str] | None = None,
     ) -> None:
         """Print representation of application configuration file."""
         if highlight_keys is None:

@@ -4,7 +4,6 @@ import dataclasses
 import functools
 from pathlib import Path
 from typing import Any
-from typing import Optional
 
 from ..logging import create_logger
 from . import sql
@@ -106,7 +105,7 @@ class Query:
         return query
 
     @staticmethod
-    def get(qid: int) -> Optional[Query]:
+    def get(qid: int) -> Query | None:
         logger.info(f"getting query from db with {qid=}")
         if query_reprs := sql.query("SELECT * FROM queries WHERE qid = ?", qid):
             return Query._from_sqlite3(query_reprs[0])
@@ -123,7 +122,7 @@ class Query:
         return None
 
     @staticmethod
-    def last() -> Optional[Query]:
+    def last() -> Query | None:
         logger.info("getting last query from db")
         if (max_qid := Query.get_max_qid()) is not None:
             return Query.get(qid=max_qid)

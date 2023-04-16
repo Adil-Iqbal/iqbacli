@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Sequence
 from logging import Logger
-from typing import Optional
-from typing import Sequence
 
 import dotenv
 
@@ -12,7 +11,7 @@ dotenv.load_dotenv()
 _envvars: Sequence[str] = ["ENV", "LOG_LEVEL", "STREAM_LOGS", "SUGGESTIONS"]
 
 
-def get_env(envvar: str, default: Optional[str] = None) -> Optional[str]:
+def get_env(envvar: str, default: str | None = None) -> str | None:
     if not envvar.startswith("IQBA_"):
         envvar = f"IQBA_{envvar}"
     value = os.getenv(envvar, default)

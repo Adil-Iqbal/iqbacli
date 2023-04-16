@@ -5,7 +5,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-from iqbacli.cli import suggestions
 from iqbacli.logging import create_logger
 from iqbacli.params import builtins
 

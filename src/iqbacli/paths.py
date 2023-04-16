@@ -4,7 +4,6 @@ from logging import Logger
 from pathlib import Path
 from typing import Any
 from typing import Final
-from typing import Optional
 
 from platformdirs import PlatformDirs
 
@@ -20,7 +19,7 @@ APP_DIRS: Final[Any] = PlatformDirs(appname="iqbacli")
 USER_DATA_DIR: Final[Path] = Path(APP_DIRS.user_data_dir)
 CONFIG_PATH: Final[Path] = Path(APP_DIRS.user_config_dir) / "iqbaconfig.json"
 DB_PATH: Final[Path] = USER_DATA_DIR / "database.sqlite3"
-_log_paths: dict[Optional[str], Path] = {
+_log_paths: dict[str | None, Path] = {
     "dev": ROOT_DIR,
     "prod": USER_DATA_DIR,
     None: USER_DATA_DIR,

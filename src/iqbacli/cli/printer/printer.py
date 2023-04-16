@@ -3,7 +3,6 @@ from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
 from pathlib import Path
-from typing import Optional
 
 from rich.console import Console
 
@@ -20,7 +19,7 @@ class Printer(ABC):
     def print_config(
         self: Printer,
         config_path: Path = CONFIG_PATH,
-        highlight_keys: Optional[list[str]] = None,
+        highlight_keys: list[str] | None = None,
     ) -> None:
         """Print representation of application configuration file."""
 
@@ -37,7 +36,7 @@ class Printer(ABC):
         """Print representation of warn message."""
 
     @abstractmethod
-    def error(self: Printer, message: str, argv: Optional[str] = None) -> None:
+    def error(self: Printer, message: str, argv: str | None = None) -> None:
         """Print representation of error message."""
 
     def print_suggestions(self: Printer, suggests: Suggestions) -> None:

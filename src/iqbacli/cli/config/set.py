@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import NoReturn
-from typing import Optional
 
 import humps
 import typer
@@ -49,7 +48,8 @@ def set(
         help="Remove color.",
         rich_help_panel="Formatting",
     ),
-    no_suggest: Optional[bool] = typer.Option(
+    no_suggest: bool
+    | None = typer.Option(
         None,
         "--no-suggest/",
         show_default=False,

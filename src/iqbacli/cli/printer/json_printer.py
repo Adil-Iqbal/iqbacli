@@ -6,7 +6,6 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 from typing import DefaultDict
-from typing import Optional
 from typing import Protocol
 
 from rich import print_json
@@ -60,13 +59,13 @@ class JsonPrinter(Printer):
     def warn(self: JsonPrinter, message: str) -> None:
         self._message(message=message, type=MessageType.WARN)
 
-    def error(self: JsonPrinter, message: str, _: Optional[str] = None) -> None:
+    def error(self: JsonPrinter, message: str, _: str | None = None) -> None:
         return self._message(message=message, type=MessageType.ERROR)
 
     def print_config(
         self: JsonPrinter,
         config_path: Path = CONFIG_PATH,
-        highlight_keys: Optional[list[str]] = None,
+        highlight_keys: list[str] | None = None,
     ) -> None:
         """Print representation of application configuration file."""
         config_dict = config.get_config_dict(config_path)

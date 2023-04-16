@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 import sqlite3
+from collections.abc import Generator
 from contextlib import contextmanager
 from typing import Any
 from typing import Final
-from typing import Generator
 
-from ..logging import create_logger
-from ..paths import DB_PATH
-from ..paths import SQL_DIR
+from iqbacli.logging import create_logger
+from iqbacli.paths import DB_PATH
+from iqbacli.paths import SQL_DIR
 
 logger = create_logger(__file__)
 

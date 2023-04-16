@@ -4,7 +4,6 @@ import dataclasses
 import functools
 from pathlib import Path
 from typing import Any
-from typing import Optional
 
 from ..logging import create_logger
 from . import sql
@@ -23,7 +22,7 @@ class Result:
     fail_to_parse_count: int = 0
     fail_to_copy_count: int = 0
     cache_dir_size: int = 0
-    cache_dir: Optional[Path] = None
+    cache_dir: Path | None = None
 
     def __hash__(self: Result):
         hash_value = self.rid if self.rid else -1
@@ -84,7 +83,6 @@ class Result:
 
     @staticmethod
     def _from_sqlite3(sql_repr: SQLiteReprResult) -> Result:
-
         result = Result(
             rid=sql_repr[0],
             qid=sql_repr[1],
@@ -100,7 +98,7 @@ class Result:
         return result
 
     @staticmethod
-    def get(rid: int) -> Optional[Result]:
+    def get(rid: int) -> Result | None:
         logger.info(f"getting result from db with {rid=}")
         if result_reprs := sql.query("SELECT * FROM results WHERE rid = ?", rid):
             return Result._from_sqlite3(result_reprs[0])
@@ -117,7 +115,7 @@ class Result:
         return None
 
     @staticmethod
-    def last() -> Optional[Result]:
+    def last() -> Result | None:
         logger.info("getting last produced result from db if any")
         if (max_rid := Result.get_max_rid()) is not None:
             return Result.get(rid=max_rid)

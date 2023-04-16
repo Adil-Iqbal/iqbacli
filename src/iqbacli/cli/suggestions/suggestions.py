@@ -1,8 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
-from typing import Optional
 
 from iqbacli.cli.suggestions.suggestion import Suggestion
 from iqbacli.driver.config import get_config
@@ -15,9 +14,7 @@ from iqbacli.paths import CONFIG_PATH
 logger = create_logger(__file__)
 
 
-def _resolve_no_suggest_param(
-    no_suggest_flag: Optional[bool], config_path: Path
-) -> bool:
+def _resolve_no_suggest_param(no_suggest_flag: bool | None, config_path: Path) -> bool:
     if no_suggest_flag is not None:
         return no_suggest_flag
 
@@ -35,7 +32,7 @@ def _resolve_no_suggest_param(
 class Suggestions:
     def __init__(
         self: Suggestions,
-        no_suggest: Optional[bool] = None,
+        no_suggest: bool | None = None,
         config_path: Path = CONFIG_PATH,
     ) -> None:
         self.no_suggest: bool = _resolve_no_suggest_param(no_suggest, config_path)

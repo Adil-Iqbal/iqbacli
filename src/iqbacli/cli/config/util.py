@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import NoReturn
-from typing import Optional
 
 import humps
 import typer
@@ -9,7 +8,7 @@ import typer
 from ...driver import config
 
 
-def _handle_key_error(key: str, default_keys: Optional[list[str]] = None) -> NoReturn:
+def _handle_key_error(key: str, default_keys: list[str] | None = None) -> NoReturn:
     if default_keys is None:
         default_keys = [humps.kebabize(k) for k in config.get_valid_config_keys()]
     typer.secho(

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -12,7 +11,7 @@ app = typer.Typer(
 )
 
 
-def _resolve_keywords(keywords: Optional[str], regex: bool) -> str:
+def _resolve_keywords(keywords: str | None, regex: bool) -> str:
     if keywords is None and not regex:
         kw = typer.prompt("Please enter a comma-seperated list of keywords: ")
     elif keywords is None and regex:
@@ -31,10 +30,12 @@ def search(
         dir_okay=True,
         exists=True,
     ),
-    keywords: Optional[str] = typer.Argument(
+    keywords: str
+    | None = typer.Argument(
         default=None, help="A comma-seperated list of keywords to look for."
     ),
-    output_dir: Optional[Path] = typer.Option(
+    output_dir: Path
+    | None = typer.Option(
         default=builtins.OUTPUT_DIR,
         envvar="IQBA_OUTPUT_DIR",
         show_envvar=False,
@@ -44,7 +45,8 @@ def search(
         exists=True,
         help="Copy matching files into this directory.",
     ),
-    params: Optional[Path] = typer.Option(
+    params: Path
+    | None = typer.Option(
         default=builtins.PARAMS,
         show_default=False,
         file_okay=True,
@@ -52,7 +54,8 @@ def search(
         exists=True,
         help="Pass in command arguments from a JSON file.",
     ),
-    id: Optional[int] = typer.Option(
+    id: int
+    | None = typer.Option(
         default=builtins.ID,
         show_default=False,
         help="Perform a specific previous search again.",
