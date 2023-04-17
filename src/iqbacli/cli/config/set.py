@@ -41,6 +41,13 @@ def set(
         help="Output json.",
         rich_help_panel="Formatting",
     ),
+    quiet: bool = typer.Option(
+        False,
+        "--quiet/",
+        show_default=False,
+        help="Silence output.",
+        rich_help_panel="Formatting",
+    ),
     no_color: bool = typer.Option(
         False,
         "--no-color/",
@@ -75,7 +82,7 @@ def set(
     except ValueError:
         _handle_value_error(_key, value)
 
-    printer = printer_factory(json, no_color)
+    printer = printer_factory(quiet, json, no_color)
     printer.success("Changes will be applied to next command.")
 
     _key = humps.kebabize(_key)

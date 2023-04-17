@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.table import Table
 
 from iqbacli.cli.printer.printer import Printer
+from iqbacli.cli.suggestions.suggestions import Suggestions
 from iqbacli.driver.config import get_config_dict
 from iqbacli.paths import CONFIG_PATH
 
@@ -54,3 +55,7 @@ class RichPrinter(Printer):
 
         self.console.print()
         self.console.print(table, highlight=self.color)
+
+    def _print_suggestions_impl(self: Printer, suggests: Suggestions) -> None:
+        """Print representation of suggestions. (PRIVATE)"""
+        ...
