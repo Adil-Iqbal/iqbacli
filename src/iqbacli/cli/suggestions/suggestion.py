@@ -12,5 +12,5 @@ class Suggestion:
     def to_dict(self: Suggestion) -> dict[str, Any]:
         return self.__dict__
 
-    def to_string(self: Suggestion, max_len: int) -> str:
+    def to_rich_str(self: Suggestion, max_len: int) -> str:
         return f"[grey50]{f'({self.description})': <{max_len + 2}} {self.command}"

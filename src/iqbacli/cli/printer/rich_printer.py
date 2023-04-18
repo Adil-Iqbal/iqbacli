@@ -58,4 +58,8 @@ class RichPrinter(Printer):
 
     def _print_suggestions_impl(self: Printer, suggests: Suggestions) -> None:
         """Print representation of suggestions. (PRIVATE)"""
-        ...
+        text = ""
+        for suggest in suggests:
+            text += f"\n{suggest.to_rich_str(suggests.max_len)}"
+
+        self.console.print(text)
