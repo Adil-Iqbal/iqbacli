@@ -11,13 +11,16 @@ __all__: list[str] = []
 
 
 def printer_factory(
-    quiet: bool = False, json: bool = False, no_color: bool = True
+    quiet: bool = False, plain: bool = False, json: bool = False, no_color: bool = True
 ) -> Printer:
     console = Console()
     color = not no_color
 
     if quiet:
         return QuietPrinter(console=console, color=color)
+
+    if plain:
+        return RichPrinter(console=console, color=color)
 
     if json:
         return JsonPrinter(console=console, color=color)
